@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import reactRefresh from "@vitejs/plugin-react-refresh";
+// @ts-ignore
 import lessToJS from "less-vars-to-js";
 import * as path from "path";
 import * as fs from "fs";
