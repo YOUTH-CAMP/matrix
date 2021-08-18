@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ConfigProvider, Button, Row, Col } from "antd";
 import zhCN from "antd/lib/locale/zh_CN";
 import "./App.less";
+import Layout from "./components/Layout/index";
 
 function App(): JSX.Element {
   const [count, setCount] = useState(0);
@@ -9,11 +10,7 @@ function App(): JSX.Element {
   return (
     <ConfigProvider locale={zhCN}>
       <div className="App">
-        <Row>
-          <Col>
-            <Button type={"primary"}>test</Button>
-          </Col>
-        </Row>
+        <Layout></Layout>
       </div>
     </ConfigProvider>
   );
