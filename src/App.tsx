@@ -1,7 +1,6 @@
 import React from "react";
 import { ConfigProvider } from "antd";
 import zhCN from "antd/lib/locale/zh_CN";
-import "./App.less";
 import Layout from "./components/Layout/index";
 import Home from "./pages/Home";
 import styles from "./App.module.less";
