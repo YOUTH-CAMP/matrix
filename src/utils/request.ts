@@ -1,7 +1,16 @@
-export type RequestFn = (fnName: string, data?: unknown) => Promise<unknown>;
+export type RequestFn = (
+  fnName: string,
+  data?: unknown
+) => Promise<IRequestResult>;
+
+export interface IRequestResult {
+  success: boolean;
+  errorMessage?: string;
+  data?: unknown;
+}
 
 export const request: RequestFn = async (fnName: string, data?: unknown) => {
-  const headers = new Headers();
+  const headers = new Headers([["Content-Type", "application/json"]]);
   const req: RequestInit = {
     method: "POST",
     headers,
