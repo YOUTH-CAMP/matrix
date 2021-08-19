@@ -4,10 +4,10 @@
  * @Author: Lida
  * @Date: 2021-08-19 21:58:44
  * @LastEditors: Lida
- * @LastEditTime: 2021-08-19 22:26:02
+ * @LastEditTime: 2021-08-19 23:27:08
  */
 import * as React from "react";
-import ArticleCard from "./components/ArticleCard";
+import ArticleCard from "../Home/components/ArticleCard";
 import { request } from "../../utils/request";
 
 type ArticleData = {
