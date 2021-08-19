@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { ConfigProvider, Button, Row, Col } from "antd";
 import zhCN from "antd/lib/locale/zh_CN";
-import "./App.less";
 import Layout from "./components/Layout/index";
 import Home from "./pages/Home";
-import styles from "./App.module.less";
+import "./App.module.less";
 import { request } from "./utils/request";
 import { useRequest } from "./hooks/useRequest";
 
