@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import styles from "./App.module.less";
 import { SignIn } from "./pages/components";
 import { GlobalContext, useGlobalContext } from "./store";
+import NavBar from "./components/Navbar";
 
 function App(): JSX.Element {
   const globalContextValue = useGlobalContext();
@@ -15,6 +16,7 @@ function App(): JSX.Element {
     <ConfigProvider locale={zhCN}>
       <GlobalContext.Provider value={globalContextValue}>
         <div className={styles.container}>
+          <NavBar />
           <Layout>
             <Home />
           </Layout>
