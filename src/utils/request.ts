@@ -5,7 +5,7 @@ export type RequestFn = (
 
 export interface IRequestResult {
   success: boolean;
-  errorMessage?: string;
+  message?: string;
   data?: unknown;
 }
 
@@ -27,7 +27,7 @@ export const request: RequestFn = async (fnName: string, data?: unknown) => {
   } catch (e) {
     return {
       success: false,
-      errorMessage: e.errorMessage ?? e.message ?? e,
+      message: e.errorMessage ?? e.message ?? e,
     };
   }
 };

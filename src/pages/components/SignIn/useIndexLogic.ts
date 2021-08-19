@@ -13,6 +13,13 @@ export function useIndexLogic(setUserInfo: (data: IUserInfo) => void) {
     manual: true,
   });
 
+  const toggleVisible = (isVisible: boolean) => {
+    if (!isVisible) {
+      form.resetFields();
+    }
+    setVisible(isVisible);
+  };
+
   const clickHandler = async (type: "signIn" | "signUp") => {
     try {
       const data = await form.validateFields();
@@ -23,22 +30,18 @@ export function useIndexLogic(setUserInfo: (data: IUserInfo) => void) {
       } else {
         res = await signUp(data);
       }
-
-      if (!res.success) {
-        message.error(res.errorMessage);
-      } else {
+      if (res.success) {
+        message.success(res.message);
         setUserInfo(res.data as IUserInfo);
+        toggleVisible(false);
+      } else {
+        message.error(res.message);
       }
     } catch (e) {
       // 捕获form.validateFields的错误，antd会自行处理，不做其他处理
     }
   };
-  const toggleVisible = (isVisible: boolean) => {
-    if (!isVisible) {
-      form.resetFields();
-    }
-    setVisible(isVisible);
-  };
+
   return {
     form,
     clickHandler,
