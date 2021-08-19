@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Card, Space, Typography } from "antd";
+import React, { useEffect, useRef, useState } from "react";
+import { Card, Space, Typography, Spin } from "antd";
 import styles from "./index.module.less";
+import { useRequest } from "../../hooks/useRequest";
 
 export type NewsProps = {
   title: string;
@@ -10,39 +11,60 @@ export type NewsProps = {
 };
 
 const News: React.FC = () => {
+  const [page, setPage] = useState<number>(0);
   const [newsList, setNewsList] = useState<NewsProps[]>([]);
+  const newsListRef = useRef<HTMLDivElement>(null);
+  const { loading, run } = useRequest("getNews", {
+    manual: true,
+  });
 
   useEffect(() => {
-    Promise.resolve([
-      {
-        title: "恒邦股份：上半年净利2.33亿元 同比增74%\n",
-        content:
-          "恒邦股份公布2021年半年度报告，公司上半年实现营业收入约213.43亿元，同比增长29.78%；归属于上市公司股东的净利润约2.33亿元，同比增长73.93%；归属于上市公司股东的扣除非经常性损益的净利润约3.28亿元；基本每股收益0.20元。",
-        time: "1 分钟前",
-        link: "https://www.baidu.com",
-      },
-      {
-        title: "恒邦股份：上半年净利2.33亿元 同比增74%\n",
-        content:
-          "恒邦股份公布2021年半年度报告，公司上半年实现营业收入约213.43亿元，同比增长29.78%；归属于上市公司股东的净利润约2.33亿元，同比增长73.93%；归属于上市公司股东的扣除非经常性损益的净利润约3.28亿元；基本每股收益0.20元。",
-        time: "1 分钟前",
-        link: "https://www.baidu.com",
-      },
-      {
-        title: "恒邦股份：上半年净利2.33亿元 同比增74%\n",
-        content:
-          "恒邦股份公布2021年半年度报告，公司上半年实现营业收入约213.43亿元，同比增长29.78%；归属于上市公司股东的净利润约2.33亿元，同比增长73.93%；归属于上市公司股东的扣除非经常性损益的净利润约3.28亿元；基本每股收益0.20元。",
-        time: "1 分钟前",
-        link: "https://www.baidu.com",
-      },
-    ]).then((res) => {
-      setNewsList(res);
+    run({ page }).then((res) => {
+      setNewsList(res.data as NewsProps[]);
     });
   }, []);
 
+  const trackScrolling = () => {
+    if (newsListRef.current) {
+      if (
+        newsListRef.current.getBoundingClientRect().bottom <=
+        window.innerHeight + 10
+      ) {
+        document.removeEventListener("scroll", trackScrolling);
+        console.log("header bottom reached");
+        setPage((page) => page + 1);
+        run({ page }).then((res) => {
+          console.log(page, res);
+          setNewsList((newsList) => newsList.concat(res.data as NewsProps[]));
+        });
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (!loading) {
+      document.addEventListener("scroll", trackScrolling);
+      return () => {
+        document.removeEventListener("scroll", trackScrolling);
+      };
+    }
+  });
+
   return (
-    <div className={styles.newsWrapper}>
-      <Space direction={"vertical"} className={styles.newsContainer}>
+    <div
+      className={styles.newsWrapper}
+      ref={newsListRef}
+      onScroll={() => {
+        console.log(111);
+      }}
+    >
+      <Space
+        direction={"vertical"}
+        className={styles.newsContainer}
+        onScroll={() => {
+          console.log(111);
+        }}
+      >
         {newsList.map((item, index) => (
           <NewsItem
             key={index}
@@ -52,6 +74,11 @@ const News: React.FC = () => {
             link={item.link}
           />
         ))}
+        {loading ? (
+          <div className={styles.newsLoading}>
+            <Spin />
+          </div>
+        ) : null}
       </Space>
     </div>
   );
@@ -59,6 +86,10 @@ const News: React.FC = () => {
 
 const NewsItem: React.FC<NewsProps> = (props: NewsProps) => {
   const { title, content, time, link } = props;
+  const date = new Date(time);
+  const timeDisplay = `${date.getFullYear()}/${date.getUTCMonth()}/${date.getUTCDate()} ${date.getUTCHours()}:${
+    (date.getMinutes() < 10 ? "0" : "") + date.getMinutes()
+  }`;
 
   const JumpToOrigin = () => {
     window.open(link, "_blank");
@@ -68,7 +99,7 @@ const NewsItem: React.FC<NewsProps> = (props: NewsProps) => {
     <Card className={styles.newsItem} onClick={JumpToOrigin}>
       <Typography.Title level={3}>{title}</Typography.Title>
       <p>{content}</p>
-      <Typography.Text type="secondary">{time}</Typography.Text>
+      <Typography.Text type="secondary">{timeDisplay}</Typography.Text>
     </Card>
   );
 };
