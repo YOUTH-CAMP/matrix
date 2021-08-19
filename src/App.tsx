@@ -4,7 +4,7 @@ import zhCN from "antd/lib/locale/zh_CN";
 import styles from "./App.module.less";
 import { request } from "./utils/request";
 import { useRequest } from "./hooks/useRequest";
-import Home from "./pages/home";
+
 function App(): JSX.Element {
   const { data, loading } = useRequest(async () =>
     request("articleClassifications")
@@ -25,7 +25,6 @@ function App(): JSX.Element {
             </Button>
           </Col>
         </Row>
-        <Home />
       </div>
     </ConfigProvider>
   );
