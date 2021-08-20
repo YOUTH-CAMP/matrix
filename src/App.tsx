@@ -20,7 +20,6 @@ function App(): JSX.Element {
               <Suspense fallback={<Spin />}>
                 <Switch>
                   <Route path="/" exact>
-                    \
                     <Home />
                   </Route>
                   <Route path="/news" exact>
