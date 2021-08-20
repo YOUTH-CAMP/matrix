@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Input, Layout } from "antd";
 import Nav from "../Nav";
+import NavBar from "../Navbar";
 
 const { Header, Content } = Layout;
 const { Search } = Input;
@@ -23,6 +24,7 @@ const App = ({ children }: Props) => {
           <Button>注册</Button>
         </div>
       </Header> */}
+      <NavBar />
       <Content>{children}</Content>
     </Layout>
   );
