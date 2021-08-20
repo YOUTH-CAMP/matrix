@@ -5,6 +5,7 @@ import style from "./index.module.less";
 import { AppstoreOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
 import { SignIn } from "../../pages/components";
+import { useHistory } from "react-router";
 
 const { SubMenu } = Menu;
 const rootSubmenuKeys = ["sub1", "sub2", "sub4"];
@@ -22,15 +23,19 @@ const Sider = () => {
   };
 };
 
-function App(): JSX.Element {
+const App: React.FC = () => {
+  const histroy = useHistory();
+  const changeRouter = (path: string) => {
+    histroy.push(path);
+  };
   return (
     <div className={style.flexframe}>
       <div className={style.center}>
         <PageHeader title="Matrix" style={{ paddingRight: "0px" }}></PageHeader>
         <div className={style.buttonstyle}>
-          <Button>首页</Button>
-          <Button>订阅</Button>
-          <Button>快讯</Button>
+          <Button onClick={() => changeRouter("/")}>首页</Button>
+          <Button onClick={() => changeRouter("/subscribe")}>订阅</Button>
+          <Button onClick={() => changeRouter("/news")}>快讯</Button>
         </div>
         <div className={style.menu}>
           <div>
@@ -63,6 +68,6 @@ function App(): JSX.Element {
       </div>
     </div>
   );
-}
+};
 
 export default App;
