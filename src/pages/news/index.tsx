@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Card, Space, Typography, Spin } from "antd";
+import { Card, Space, Typography, Spin, BackTop } from "antd";
 import styles from "./index.module.less";
 import { useRequest } from "../../hooks/useRequest";
 
@@ -51,13 +51,7 @@ const News: React.FC = () => {
   });
 
   return (
-    <div
-      className={styles.newsWrapper}
-      ref={newsListRef}
-      onScroll={() => {
-        console.log(111);
-      }}
-    >
+    <div className={styles.newsWrapper} ref={newsListRef}>
       <Space
         direction={"vertical"}
         className={styles.newsContainer}
@@ -80,6 +74,9 @@ const News: React.FC = () => {
           </div>
         ) : null}
       </Space>
+      <BackTop>
+        <div className={styles.backTop}>UP</div>
+      </BackTop>
     </div>
   );
 };
