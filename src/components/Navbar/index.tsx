@@ -1,9 +1,11 @@
 import React from "react";
 import zhCN from "antd/lib/locale/zh_CN";
-import { PageHeader, Tabs, Button, Statistic, Descriptions } from "antd";
+import { PageHeader, Tabs, Button, Statistic, Descriptions, Input } from "antd";
 import style from "./index.module.less";
 import { AppstoreOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
+const { Search } = Input;
+import { SignIn } from "../../pages/components/SignIn/index";
 
 const { SubMenu } = Menu;
 const rootSubmenuKeys = ["sub1", "sub2", "sub4"];
@@ -20,6 +22,7 @@ const Sider = () => {
     }
   };
 };
+const onSearch = (value: string) => console.log(value);
 
 function App(): JSX.Element {
   return (
@@ -42,22 +45,17 @@ function App(): JSX.Element {
             </Menu>
           </div>
         </div>
+        <div className={style.buttonstyle}>
+          <Search placeholder="搜索您想要的模块" onSearch={onSearch} />
+        </div>
       </div>
-      {/* <HeaderSearch
-                placeholder="站内搜索"
-                dataSource={['搜索提示一', '搜索提示二', '搜索提示三']}
-                // onSearch={value => {
-                //     console.log('input', value); // eslint-disable-line
-                // }}
-                // onPressEnter={value => {
-                //     console.log('enter', value); // eslint-disable-line
-                // }}
-            /> */}
 
-      <div className={style.center}>
-        <PageHeader
+      <div className={style.logincenter}>
+        {/* <PageHeader
           extra={[<Button key="1">登录</Button>, <Button key="2">注册</Button>]}
-        ></PageHeader>
+        > */}
+        <SignIn />
+        {/* </PageHeader> */}
       </div>
     </div>
   );
