@@ -4,6 +4,7 @@ import { PageHeader, Tabs, Button, Statistic, Descriptions } from "antd";
 import style from "./index.module.less";
 import { AppstoreOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
+import { SignIn } from "../../pages/components";
 
 const { SubMenu } = Menu;
 const rootSubmenuKeys = ["sub1", "sub2", "sub4"];
@@ -55,9 +56,10 @@ function App(): JSX.Element {
             /> */}
 
       <div className={style.center}>
-        <PageHeader
+        <SignIn />
+        {/* <PageHeader
           extra={[<Button key="1">登录</Button>, <Button key="2">注册</Button>]}
-        ></PageHeader>
+        ></PageHeader> */}
       </div>
     </div>
   );
