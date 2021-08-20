@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Button, Modal, Form, Input } from "antd";
 import styles from "./index.module.less";
 import { useIndexLogic } from "./useIndexLogic";
-import { GlobalContext } from "../../../store";
+import { GlobalContext } from "@/store";
 
 export function SignIn(): JSX.Element {
   const { setUserInfo } = useContext(GlobalContext);
