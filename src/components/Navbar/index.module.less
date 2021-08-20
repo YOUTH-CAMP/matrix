@@ -1,0 +1,41 @@
+.flexframe{
+    display: flex;
+    justify-content:space-around;
+}
+.center {
+    display: flex;
+    // justify-content:flex-end;
+}
+  
+.buttonstyle {
+    padding: '16px 24px';
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.HeaderSearch{
+    text-align: 'right',
+}
+
+.menu{
+    // padding: '16px 24px';
+    justify-content: center;
+    align-items: center; 
+    display: none;
+    
+}
+
+@media only screen and (max-width: 600px) {
+    .buttonstyle {
+      display:none;
+    }
+    .menu{
+        display: flex;   
+    }
+    .center {
+        padding: 0px;
+        margin:0px;
+    }
+    
+  }

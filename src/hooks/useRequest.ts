@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { IRequestResult, request } from "../utils/request";
 
 interface IUseRequestParams {
   defaultLoading?: boolean;
@@ -7,7 +8,7 @@ interface IUseRequestParams {
 }
 
 export function useRequest(
-  fn: (args?: unknown) => Promise<unknown>,
+  fn: string | ((args?: unknown) => Promise<IRequestResult>),
   params?: IUseRequestParams
 ) {
   const defaultLoading = params?.defaultLoading ?? false;
@@ -18,9 +19,10 @@ export function useRequest(
   const [data, setData] = useState(initData);
   const [requestParams, setRequestParams] = useState<unknown>(undefined);
 
-  const request = async (args?: unknown) => {
+  const _request = async (args?: unknown): Promise<IRequestResult> => {
     setLoading(true);
-    const res = await fn(args);
+    const res =
+      typeof fn === "string" ? await request(fn, args) : await fn(args);
     setLoading(false);
     setData(res);
     return res;
@@ -28,16 +30,16 @@ export function useRequest(
 
   const run = async (args: unknown) => {
     setRequestParams(args);
-    return request(args);
+    return _request(args);
   };
 
   const refresh = async () => {
-    return request(requestParams);
+    return _request(requestParams);
   };
 
   useEffect(() => {
     if (!manual) {
-      request();
+      _request();
     }
   }, []);
 

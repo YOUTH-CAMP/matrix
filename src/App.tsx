@@ -1,29 +1,25 @@
-import React, { useState } from "react";
-import { ConfigProvider, Button, Row, Col } from "antd";
+import React from "react";
+import { ConfigProvider } from "antd";
 import zhCN from "antd/lib/locale/zh_CN";
 import Layout from "./components/Layout/index";
 import Home from "./pages/Home";
-import "./App.module.less";
-import { request } from "./utils/request";
-import { useRequest } from "./hooks/useRequest";
+import styles from "./App.module.less";
+import { SignIn } from "./pages/components";
+import { GlobalContext, useGlobalContext } from "./store";
+import NavBar from "./components/Navbar";
 
 function App(): JSX.Element {
-  const { data, loading } = useRequest(async () =>
-    request("articleClassifications")
-  );
+  const globalContextValue = useGlobalContext();
 
-  async function test() {
-    const res = await request("articleClassifications");
-    console.log(res);
-  }
-  console.log(data, loading);
   return (
     <ConfigProvider locale={zhCN}>
-      <div className="App">
-        <Layout>
-          <Home />
-        </Layout>
-      </div>
+      <GlobalContext.Provider value={globalContextValue}>
+        <div className={styles.container}>
+          <Layout>
+            <Home />
+          </Layout>
+        </div>
+      </GlobalContext.Provider>
     </ConfigProvider>
   );
 }
