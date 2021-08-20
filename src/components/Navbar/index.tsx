@@ -19,39 +19,32 @@ const onSearch = (value: string) => console.log(value);
 function App(): JSX.Element {
   const history = useHistory();
 
+  const onMain = () => {
+    history.push({ pathname: "/" });
+  };
+
+  const onNews = () => {
+    history.push({ pathname: "./news" });
+  };
+
   return (
     <div className={style.flexframe}>
       <div className={style.center}>
         <PageHeader title="Matrix" style={{ paddingRight: "0px" }}></PageHeader>
         <div className={style.buttonstyle}>
-          <Button
-            onClick={() => {
-              history.push({ pathname: "/" });
-            }}
-          >
-            首页
-          </Button>
+          <Button onClick={onMain}>首页</Button>
           <Button>订阅</Button>
-          <Button
-            onClick={() => {
-              history.push({ pathname: "./news" });
-            }}
-          >
-            快讯
-          </Button>
+          <Button onClick={onNews}>快讯</Button>
         </div>
         <div className={style.menu}>
           <div>
             <Menu mode="inline" style={{ paddingLeft: "0px" }}>
               <SubMenu key="sub1" icon={<AppstoreOutlined />}>
-                <Menu.Item key="1">首页</Menu.Item>
+                <Menu.Item key="1" onClick={onMain}>
+                  首页
+                </Menu.Item>
                 <Menu.Item key="2">订阅</Menu.Item>
-                <Menu.Item
-                  key="3"
-                  onClick={() => {
-                    history.push({ pathname: "./news" });
-                  }}
-                >
+                <Menu.Item key="3" onClick={onNews}>
                   快讯
                 </Menu.Item>
               </SubMenu>
