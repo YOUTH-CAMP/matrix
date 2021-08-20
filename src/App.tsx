@@ -7,6 +7,8 @@ import styles from "./App.module.less";
 import { SignIn } from "./pages/components";
 import { GlobalContext, useGlobalContext } from "./store";
 import NavBar from "./components/Navbar";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import News from "./pages/News";
 
 function App(): JSX.Element {
   const globalContextValue = useGlobalContext();
@@ -16,7 +18,14 @@ function App(): JSX.Element {
       <GlobalContext.Provider value={globalContextValue}>
         <div className={styles.container}>
           <Layout>
-            <Home />
+            <Router>
+              <Route path="/" exact>
+                <Home />
+              </Route>
+              <Route path="/news" exact>
+                <News />
+              </Route>
+            </Router>
           </Layout>
         </div>
       </GlobalContext.Provider>
