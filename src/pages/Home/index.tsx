@@ -1,9 +1,10 @@
 import React, { useState, FC, useEffect, useRef } from "react";
-import { Card, Col, Row, Tabs } from "antd";
+import { Tabs } from "antd";
 import { useHistory } from "react-router";
 import { Responsive, WidthProvider, Layout } from "react-grid-layout";
 import "./style.css";
-import pageInfo from "./all.json";
+import { request } from "./../../utils/request";
+import style from "./ArticleCard.module.less";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const { TabPane } = Tabs;
@@ -11,19 +12,6 @@ const { TabPane } = Tabs;
 interface Props {
   name?: string;
 }
-type articleList = {
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-  title: string;
-  key: string;
-  url: string;
-  content: {
-    itemTitle: string;
-    itemContent: string;
-  }[];
-};
 
 type listItem = {
   x: number;
@@ -33,25 +21,39 @@ type listItem = {
   i: string;
 }[];
 
+type ArticleData = {
+  success: boolean;
+  data: Array<articleList>;
+};
+
 const Home: FC<Props> = ({ name = "Home" }: Props) => {
-  console.log("page", pageInfo);
   const [EUlayout, setEUlayout] = useState<listItem>([]);
-  useEffect(() => {
-    const newLayout: listItem = [];
-    pageInfo.pageInfo.map((item) => {
-      const newItem = {
-        x: item.x,
-        y: item.y,
-        w: item.w,
-        minW: 2,
-        minH: 3,
-        h: item.h,
-        i: item.key,
-      };
-      newLayout.push(newItem);
-    });
-    setEUlayout(newLayout);
+  const [articlesList, setArticlesList] = React.useState<articleList[]>([]);
+  const [loaded, setLoaded] = React.useState<boolean>(false);
+  React.useEffect(() => {
+    //获取用户首页卡片接口数据
+    const fetchData = async () => {
+      const res = (await request("articleList")) as ArticleData;
+      setLoaded(res.success);
+      setArticlesList(res.data);
+      const newLayout: listItem = [];
+      res.data.map((item) => {
+        const newItem = {
+          x: item.x,
+          y: item.y,
+          w: item.w,
+          minW: 2,
+          minH: 3,
+          h: item.h,
+          i: item.key,
+        };
+        newLayout.push(newItem);
+      });
+      setEUlayout(newLayout);
+    };
+    !loaded && fetchData();
   }, []);
+
   function callback(key: string) {
     console.log(key);
   }
@@ -71,77 +73,53 @@ const Home: FC<Props> = ({ name = "Home" }: Props) => {
   };
   return (
     <div className="justify-center" style={{ height: "100%", width: "100%" }}>
-      <Tabs defaultActiveKey="1" onChange={callback} centered>
-        <TabPane tab="全部" key="/">
-          <div className="site-card-wrapper" style={{ padding: "0px 50px" }}>
-            <ResponsiveReactGridLayout
-              className="layout"
-              layouts={{
-                lg: EUlayout,
-              }}
-              rowHeight={30}
-              // isDraggable={false} //是否允许拖拽
-              // isDroppable={false} //是否允许拖拽
-              compactType="vertical"
-              // useCSSTransforms={true} //性能优化
-              // isResizable={false} //是否可以调整大小
-              measureBeforeMount={false}
-              cols={{ lg: 12, md: 12, sm: 6, xs: 4, xxs: 2 }}
-              onLayoutChange={onLayoutChange}
-              margin={[20, 20]}
-            >
-              {pageInfo.pageInfo.map((item) => {
-                // return (
-                //   <Card
-                //     title={item.title}
-                //     bordered={false}
-                //     key={item.key}
-                //     style={{ width: 300 }}
-                //   >
-                //     <p>Card content</p>
-                //     <p>Card content</p>
-                //     <p>Card content</p>
-                //   </Card>
-                // );
-                return (
-                  <div
-                    key={item.key}
-                    className="flex justify-content border-gray-300	w-full h-full flex-col rounded border-2"
-                  >
-                    <div className="h-1/4 px-8 flex items-center border-gray-300 border-b-2 text-base">
-                      {item.title}
+      {loaded && (
+        <Tabs defaultActiveKey="1" onChange={callback} centered>
+          <TabPane tab="全部" key="/">
+            <div className="site-card-wrapper" style={{ padding: "0px 50px" }}>
+              <ResponsiveReactGridLayout
+                className="layout"
+                layouts={{
+                  lg: EUlayout,
+                }}
+                rowHeight={30}
+                // isDraggable={false} //是否允许拖拽
+                // isDroppable={false} //是否允许拖拽
+                compactType="vertical"
+                // useCSSTransforms={true} //性能优化
+                // isResizable={false} //是否可以调整大小
+                measureBeforeMount={false}
+                cols={{ lg: 12, md: 12, sm: 6, xs: 4, xxs: 2 }}
+                onLayoutChange={onLayoutChange}
+                margin={[20, 20]}
+              >
+                {articlesList.map((item) => {
+                  return (
+                    <div key={item.key} className={style.articlebox}>
+                      <div className={style.articletitle}>{item.title}</div>
+                      <div className={style.articlelist}>
+                        <ul>
+                          {item.content.map((cItem, cIndex) => {
+                            return (
+                              <li key={item.key + cIndex}>{cItem.itemTitle}</li>
+                            );
+                          })}
+                        </ul>
+                      </div>
                     </div>
-                    <ul
-                      style={{
-                        display: "flex",
-                        flex: 1,
-                        flexDirection: "column",
-                      }}
-                    >
-                      {item.content.map((cItem, cIndex) => {
-                        return (
-                          <li
-                            className="h-1/4 px-8 flex items-center border-gray-100 border-b-2 text-xs"
-                            key={item.key + cIndex}
-                          >
-                            {cItem.itemTitle}
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-                );
-              })}
-            </ResponsiveReactGridLayout>
-          </div>
-        </TabPane>
-        <TabPane tab="科技" key="/senice">
-          ddd
-        </TabPane>
-        <TabPane tab="开发" key="/develop">
-          ccc
-        </TabPane>
-      </Tabs>
+                  );
+                })}
+              </ResponsiveReactGridLayout>
+            </div>
+          </TabPane>
+          <TabPane tab="科技" key="/senice">
+            ddd
+          </TabPane>
+          <TabPane tab="开发" key="/develop">
+            ccc
+          </TabPane>
+        </Tabs>
+      )}
     </div>
   );
 };
