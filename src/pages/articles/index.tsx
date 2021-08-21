@@ -12,11 +12,11 @@ import { request } from "../../utils/request";
 
 type ArticleData = {
   success: boolean;
-  data: Array<ArticleList>;
+  data: Array<any>;
 };
 
 const Home: React.FC = () => {
-  const [articlesList, setArticlesList] = React.useState<ArticleList[]>([
+  const [articlesList, setArticlesList] = React.useState<any[]>([
     {
       name: "0",
       classificationId: 0,
