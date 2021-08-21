@@ -3,9 +3,12 @@ import { IUserInfo } from "@/apis/account/interface";
 import { IGlobalContext } from "@/interface";
 import { GlobalEventName } from "@/constants/GlobalEventName";
 import { LocalstorageKey } from "@/constants";
+import { message } from "antd";
 
 export function useGlobalContext(): IGlobalContext {
-  const [userInfo, setUserInfo] = useState<null | IUserInfo>(null);
+  const [userInfo, setUserInfo] = useState<null | IUserInfo>(
+    JSON.parse(localStorage.getItem(LocalstorageKey.userInfo) ?? "null")
+  );
   const [signInModalVisible, setSignInModalVisible] = useState(false);
   const [globalEvent, setGlobalEvent] = useState<{
     [k: string]: Array<() => void>;
@@ -16,6 +19,7 @@ export function useGlobalContext(): IGlobalContext {
     setUserInfo(null);
     localStorage.removeItem(LocalstorageKey.userInfo);
     globalEvent[GlobalEventName.logout]?.forEach((fn) => fn());
+    message.success("退出登录成功");
   };
 
   const on = (globalEventName: GlobalEventName, callback: () => void) => {
@@ -30,11 +34,11 @@ export function useGlobalContext(): IGlobalContext {
 
   const showSignInModal = () => {
     setSignInModalVisible(true);
-  }
+  };
 
   const hideSignInModal = () => {
     setSignInModalVisible(false);
-  }
+  };
 
   return {
     userInfo,

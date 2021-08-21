@@ -18,21 +18,20 @@ const UserMenu = ({
   style,
   menuStyle,
 }: UserMenuProps) => {
-  const menu = useMemo(() => {
-    return (
-      <Menu className={classNames(menuClassName)} style={menuStyle}>
-        {dropList.map((item, index) => {
-          return (
-            <Menu.Item key={index}>
-              <a onClick={item.onClick}>{item.title}</a>
-            </Menu.Item>
-          );
-        })}
-      </Menu>
-    );
-  }, [dropList]);
+  const menu = (
+    <Menu className={classNames(menuClassName)} style={menuStyle}>
+      {dropList.map((item, index) => {
+        return (
+          <Menu.Item key={index}>
+            <a onClick={item.onClick}>{item.title}</a>
+          </Menu.Item>
+        );
+      })}
+    </Menu>
+  );
+
   return (
-    <Dropdown overlay={menu} placement="bottomLeft">
+    <Dropdown overlay={menu} placement="bottomRight">
       <span className={classNames(className)} style={style}>
         {userName}
       </span>

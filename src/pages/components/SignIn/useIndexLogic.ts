@@ -3,9 +3,11 @@ import { useContext } from "react";
 import { useRequest } from "@/hooks/useRequest";
 import { IUserInfo } from "@/apis/account/interface";
 import { GlobalContext } from "@/store";
+import { LocalstorageKey } from "@/constants";
 
 export function useIndexLogic(setUserInfo: (data: IUserInfo) => void) {
-  const {showSignInModal, hideSignInModal, signInModalVisible} = useContext(GlobalContext);
+  const { showSignInModal, hideSignInModal, signInModalVisible } =
+    useContext(GlobalContext);
 
   const [form] = Form.useForm();
   const { loading: signInLoading, run: signIn } = useRequest("signin", {
@@ -38,6 +40,10 @@ export function useIndexLogic(setUserInfo: (data: IUserInfo) => void) {
         message.success(res.message);
         setUserInfo(res.data as IUserInfo);
         toggleVisible(false);
+        localStorage.setItem(
+          LocalstorageKey.userInfo,
+          JSON.stringify(res.data)
+        );
       } else {
         message.error(res.message);
       }

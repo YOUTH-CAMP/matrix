@@ -5,7 +5,6 @@
     height: 100%;
     padding: 5px;
     background-color: #ececec;
-    margin: 30px 10px 30px 10px;
     position: relative;
     box-shadow: 10px 10px 5px #888888;
 }
@@ -64,6 +63,28 @@
         li:hover {
             background-color: #e0e2e4;
         }
+    }
+    /* 火狐 */
+    scrollbar-color: #c2c2c2 #f5f6f8;
+    scrollbar-width: thin;
+      
+    /* chrome */
+    &::-webkit-scrollbar {
+        /* 滚动条纵向滚动的尺寸 */
+        width : 6px;
+          /* 滚动条横向滚动的尺寸 */
+        height: 6px;
+    }
+      
+    /* 滚动条颜色 */
+    &::-webkit-scrollbar-thumb {
+        border-radius   : 5px;
+        background-color: rgba(50, 50, 50, .3);
+    }
+      
+    /* 滚动槽颜色 */
+    &::-webkit-scrollbar-track {
+        background-color: rgba(50, 50, 50, .1);
     }
 }
 .out-line {
