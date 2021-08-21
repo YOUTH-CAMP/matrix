@@ -31,40 +31,39 @@ interface Props {
   classifyId?: string;
 }
 const DragLayout = ({ classifyId }: Props) => {
-  const { userInfo } = useContext(GlobalContext);
+  const { userInfo, showSignInModal } = useContext(GlobalContext);
   const [EUlayout, setEUlayout] = useState<listItem[]>([]);
   const [articlesList, setArticlesList] = useState<articleList[]>([]);
-  const [loaded, setLoaded] = React.useState<boolean>(false);
   const userId = userInfo?.id;
   console.log(userInfo, userId);
+  const fetchData = async () => {
+    const res = (await request("articleList")) as ArticleData;
+    const LayoutRes = (await request("getLayout", {
+      userId,
+      classifyId,
+    })) as LayoutData;
+    setArticlesList(res.data);
+    const newLayout: listItem[] = [];
+    LayoutRes.data.map((item) => {
+      const newItem = {
+        x: item.x,
+        y: item.y,
+        w: item.w,
+        minW: 2,
+        minH: 3,
+        h: item.h,
+        i: item.i,
+      };
+      newLayout.push(newItem);
+    });
+    setEUlayout(newLayout);
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      const res = (await request("articleList")) as ArticleData;
-      const LayoutRes = (await request("getLayout", {
-        userId,
-        classifyId,
-      })) as LayoutData;
-      setLoaded(res.success);
-      setArticlesList(res.data);
-      const newLayout: listItem[] = [];
-      LayoutRes.data.map((item) => {
-        const newItem = {
-          x: item.x,
-          y: item.y,
-          w: item.w,
-          minW: 2,
-          minH: 3,
-          h: item.h,
-          i: item.i,
-        };
-        newLayout.push(newItem);
-      });
-      setEUlayout(newLayout);
-    };
-    !loaded && fetchData();
-  }, []);
+    console.log(233);
+    fetchData();
+  }, [userInfo]);
   const checkLogin = async (e: Layout[]) => {
-    if (!userInfo) return message.error("您还未进行登录，无法配置页面信息");
+    if (!userInfo) return message.error("您还未进行登录，无法保存页面布局信息"),showSignInModal();
     const saveLayout = await request("saveLayout", {
       coordinateInfo: JSON.stringify(e),
       userId,
@@ -92,7 +91,7 @@ const DragLayout = ({ classifyId }: Props) => {
         useCSSTransforms={true} //性能优化
         // isResizable={false} //是否可以调整大小
         measureBeforeMount={false}
-        resizeHandles={['sw','nw', 'se', 'ne']}
+        // resizeHandles={['sw','nw', 'se', 'ne']}
         cols={{ lg: 12, md: 12, sm: 6, xs: 4, xxs: 2 }}
         // onLayoutChange={onLayoutChange}
         onDragStop={onDragStop}

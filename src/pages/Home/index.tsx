@@ -32,13 +32,10 @@ const Home: FC<Props> = ({ name = "Home" }: Props) => {
     !loaded && fetchData();
   }, []);
 
-  function callback(key: string) {
-    console.log(key);
-  }
   return (
     <div className="justify-center" style={{ height: "100%", width: "100%" }}>
       {loaded && (
-        <Tabs defaultActiveKey="1" onChange={callback} centered>
+        <Tabs defaultActiveKey="1" centered>
           {TabData.map((item, index) => {
             return (
               <TabPane tab={item.name} key={index}>
