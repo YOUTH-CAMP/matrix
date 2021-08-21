@@ -21,9 +21,9 @@ export function SignIn(): JSX.Element {
     };
     return (
       <div>
-        <div className={styles.enterButton} onClick={() => toggleVisible(true)}>
+        <Button shape="round" onClick={() => toggleVisible(true)}>
           登录 / 注册
-        </div>
+        </Button>
 
         <Modal
           visible={visible}
