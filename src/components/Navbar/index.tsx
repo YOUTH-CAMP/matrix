@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useContext } from "react";
 import zhCN from "antd/lib/locale/zh_CN";
 import { PageHeader, Tabs, Button, Statistic, Descriptions, Input } from "antd";
 import style from "./index.module.less";
@@ -8,6 +8,8 @@ const { Search } = Input;
 import { SignIn } from "../../pages/components/SignIn/index";
 import { useHistory } from "react-router-dom";
 import { SearchOutlined } from "@ant-design/icons";
+import { GlobalContext } from "@/store";
+import UserMenu from "../UserMenu";
 
 const { SubMenu } = Menu;
 const onSearch = (value: string) => console.log(value);
@@ -19,6 +21,7 @@ const menuList = [
 
 function App(): JSX.Element {
   const history = useHistory();
+  const { userInfo, logout } = useContext(GlobalContext);
   const jumpPage = (path: string) => {
     if (path === "/") history.push({ pathname: path });
     else if (path === "./news") history.push({ pathname: path });
@@ -70,7 +73,21 @@ function App(): JSX.Element {
       </div>
 
       <div className={style.logincenter}>
-        <SignIn />
+        {userInfo ? (
+          <UserMenu
+            userName={userInfo.account}
+            dropList={[
+              {
+                title: "退出登录",
+                onClick: () => {
+                  logout();
+                },
+              },
+            ]}
+          />
+        ) : (
+          <SignIn />
+        )}
       </div>
     </div>
   );
