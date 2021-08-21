@@ -10,7 +10,6 @@ import { SearchOutlined } from "@ant-design/icons";
 import { GlobalContext } from "@/store";
 import UserMenu from "../UserMenu";
 import { AppstoreOutlined } from "@ant-design/icons";
-import { positions } from "@material-ui/system";
 
 const { SubMenu } = Menu;
 const onSearch = (value: string) => console.log(value);
