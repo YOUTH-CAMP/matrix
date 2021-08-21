@@ -9,6 +9,8 @@ import style from "./ArticleCard.module.less";
 import { request } from "./../../utils/request";
 import { message } from "antd";
 import { GlobalContext } from "../../store";
+import ArticleCard from './components/ArticleCard'
+
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 type listItem = {
   x: number;
@@ -98,15 +100,11 @@ const DragLayout = ({ classifyId }: Props) => {
       >
         {articlesList.map((item) => {
           return (
-            <div key={item.key} className={style.articlebox}>
-              <div className={style.articletitle}>{item.title}</div>
-              <div className={style.articlelist}>
-                <ul>
-                  {item.content.map((cItem, cIndex) => {
-                    return <li key={item.key + cIndex}>{cItem.itemTitle}</li>;
-                  })}
-                </ul>
-              </div>
+            <div
+              key={item.key}
+              className="flex justify-content w-full h-full flex-col"
+            >
+              <ArticleCard article={item} />
             </div>
           );
         })}

@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Input, Layout } from "antd";
-import Navbar from "../Navbar";
+import NavBar from "../Navbar";
+import { relative } from "path/posix";
 
 const { Header, Content } = Layout;
 const { Search } = Input;
@@ -13,10 +14,13 @@ const App = ({ children }: Props) => {
   const onSearch = (value: string) => console.log(value);
   return (
     <Layout className="min-h-screen flex bg-gray-50">
-      <Header className="w-full bg-white flex justify-between items-center">
-        <Navbar />
-      </Header>
-      <Content>{children}</Content>
+      <div>
+        <NavBar />
+      </div>
+      <div style={{ height: "75px" }}></div>
+      <div>
+        <Content>{children}</Content>
+      </div>
     </Layout>
   );
 };

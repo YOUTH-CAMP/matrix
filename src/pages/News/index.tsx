@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Spin } from "antd";
 import styles from "./index.module.less";
-import { useRequest } from "../../hooks/useRequest";
+import { useRequest } from "@/hooks/useRequest";
 import MessageList from "../components/NewsList";
 import { INews } from "@/apis/news/interface";
 

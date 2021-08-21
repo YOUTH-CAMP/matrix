@@ -6,5 +6,8 @@ export interface IGlobalContext {
   userInfo: null | IUserInfo;
   setUserInfo: (data: IUserInfo) => void;
   logout: () => void;
+  showSignInModal: () => void;
+  hideSignInModal: () => void;
   on: (globalEventName: GlobalEventName, callback: () => void) => void;
+  signInModalVisible: boolean;
 }
