@@ -12,6 +12,7 @@
 }
 .react-grid-item.cssTransforms {
   transition-property: transform;
+  border-radius: 10px;
 }
 .react-grid-item.resizing {
   z-index: 1;
