@@ -7,61 +7,70 @@ import { Menu } from "antd";
 const { Search } = Input;
 import { SignIn } from "../../pages/components/SignIn/index";
 import { useHistory } from "react-router-dom";
+import { SearchOutlined } from "@ant-design/icons";
 
 const { SubMenu } = Menu;
-const rootSubmenuKeys = ["sub1", "sub2", "sub4"];
 const onSearch = (value: string) => console.log(value);
-// const directToNews = () => {
-//   history.push('./news');
-
-// }
+const menuList = [
+  { name: "首页", key: "1", path: "/" },
+  { name: "订阅", key: "2", path: "/xxx" },
+  { name: "快讯", key: "3", path: "./news" },
+];
 
 function App(): JSX.Element {
   const history = useHistory();
-
-  const onMain = () => {
-    history.push({ pathname: "/" });
+  const jumpPage = (path: string) => {
+    if (path === "/") history.push({ pathname: path });
+    else if (path === "./news") history.push({ pathname: path });
   };
-
-  const onNews = () => {
-    history.push({ pathname: "./news" });
-  };
-
   return (
     <div className={style.flexframe}>
       <div className={style.center}>
         <PageHeader title="Matrix" style={{ paddingRight: "0px" }}></PageHeader>
         <div className={style.buttonstyle}>
-          <Button onClick={onMain}>首页</Button>
-          <Button>订阅</Button>
-          <Button onClick={onNews}>快讯</Button>
+          <Button
+            onClick={() => jumpPage("/")}
+            style={{ border: "transparent", paddingLeft: "24px" }}
+          >
+            首页
+          </Button>
+          <Button style={{ border: "transparent", paddingLeft: "24px" }}>
+            订阅
+          </Button>
+          <Button
+            onClick={() => jumpPage("./news")}
+            style={{ border: "transparent", paddingLeft: "24px" }}
+          >
+            快讯
+          </Button>
         </div>
         <div className={style.menu}>
           <div>
             <Menu mode="inline" style={{ paddingLeft: "0px" }}>
               <SubMenu key="sub1" icon={<AppstoreOutlined />}>
-                <Menu.Item key="1" onClick={onMain}>
-                  首页
-                </Menu.Item>
-                <Menu.Item key="2">订阅</Menu.Item>
-                <Menu.Item key="3" onClick={onNews}>
-                  快讯
-                </Menu.Item>
+                {menuList.map((menu) => {
+                  <Menu.Item key={menu.key} onClick={() => jumpPage(menu.path)}>
+                    {menu.name}
+                  </Menu.Item>;
+                })}
               </SubMenu>
             </Menu>
           </div>
         </div>
-        <div className={style.buttonstyle}>
-          <Search placeholder="搜索您想要的模块" onSearch={onSearch} />
+        <div className={style.buttonstyle2}>
+          <Search
+            placeholder="搜索您想要的模块"
+            onSearch={onSearch}
+            style={{ width: "300px" }}
+          />
         </div>
+        <Button className={style.searchbutton}>
+          <SearchOutlined />
+        </Button>
       </div>
 
       <div className={style.logincenter}>
-        {/* <PageHeader
-          extra={[<Button key="1">登录</Button>, <Button key="2">注册</Button>]}
-        > */}
         <SignIn />
-        {/* </PageHeader> */}
       </div>
     </div>
   );
