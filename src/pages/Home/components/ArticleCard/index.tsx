@@ -13,7 +13,7 @@ const ArticleCard: React.FC<ArticleCardProps> = (props: ArticleCardProps) => {
   return (
     <div className={style.articlebox}>
       <div className={style.articletitle}>
-      <img style={{display:"inline-block",height:"35px",width:article.title=="微博"?"35px":"60px"}} src={
+      <img style={{display:"inline-block",height:"40px",width:article.title=="微博"?"40px":"60px"}} src={
         article.title=="微博"?
         "https://tse2-mm.cn.bing.net/th/id/OIP-C.zZ57V80mCw7QVbv3SAmkSgHaF_?pid=ImgDet&rs=1"
       :"https://i8.chinanews.com/2013/home/images/logo.jpg"}></img>
@@ -43,10 +43,10 @@ const ArticleCard: React.FC<ArticleCardProps> = (props: ArticleCardProps) => {
             </li>
           ))}
         </ul>
-      <BackTop target={()=>listEl.current} visibilityHeight={400}>
-        < UpCircleOutlined  className={style.backtop}/>
-      </BackTop>
       </div>
+      <BackTop className={style.backtop} target={()=>listEl.current} visibilityHeight={400}>
+        < UpCircleOutlined style={{color: "rgba(50, 50, 50, .5)",fontSize: "18px"}}/>
+      </BackTop>
       <div className={style.articlefooter}></div>
     </div>
   );
