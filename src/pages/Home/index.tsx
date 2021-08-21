@@ -8,7 +8,7 @@ import ReactGridLayout, {
 } from "react-grid-layout";
 import "./style.css";
 import { request } from "./../../utils/request";
-import style from "./ArticleCard.module.less";
+import ArticleCard from "./components/ArticleCard";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const { TabPane } = Tabs;
@@ -149,17 +149,11 @@ const Home: FC<Props> = ({ name = "Home" }: Props) => {
               >
                 {articlesList.map((item) => {
                   return (
-                    <div key={item.key} className={style.articlebox}>
-                      <div className={style.articletitle}>{item.title}</div>
-                      <div className={style.articlelist}>
-                        <ul>
-                          {item.content.map((cItem, cIndex) => {
-                            return (
-                              <li key={item.key + cIndex}>{cItem.itemTitle}</li>
-                            );
-                          })}
-                        </ul>
-                      </div>
+                    <div
+                      key={item.key}
+                      className="flex justify-content w-full h-full flex-col"
+                    >
+                      <ArticleCard article={item} />
                     </div>
                   );
                 })}
