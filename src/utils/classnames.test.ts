@@ -12,6 +12,10 @@ test("undefined", () => {
   expect(classNames(undefined)).toBe("");
 });
 
+test("boolean", () => {
+  expect(classNames(true, false)).toBe("");
+});
+
 test("undefined and object", () => {
   expect(
     classNames(undefined, {
