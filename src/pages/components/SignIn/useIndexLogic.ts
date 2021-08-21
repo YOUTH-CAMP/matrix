@@ -1,10 +1,12 @@
 import { Form, message } from "antd";
-import { useState } from "react";
-import { useRequest } from "../../../hooks/useRequest";
-import { IUserInfo } from "../../../apis/account/interface";
+import { useContext, useState } from "react";
+import { useRequest } from "@/hooks/useRequest";
+import { IUserInfo } from "@/apis/account/interface";
+import { GlobalContext } from "@/store";
 
 export function useIndexLogic(setUserInfo: (data: IUserInfo) => void) {
-  const [visible, setVisible] = useState(false);
+  const {showSignInModal, hideSignInModal, signInModalVisible} = useContext(GlobalContext);
+
   const [form] = Form.useForm();
   const { loading: signInLoading, run: signIn } = useRequest("signin", {
     manual: true,
@@ -16,8 +18,10 @@ export function useIndexLogic(setUserInfo: (data: IUserInfo) => void) {
   const toggleVisible = (isVisible: boolean) => {
     if (!isVisible) {
       form.resetFields();
+      hideSignInModal();
+    } else {
+      showSignInModal();
     }
-    setVisible(isVisible);
   };
 
   const clickHandler = async (type: "signIn" | "signUp") => {
@@ -45,7 +49,7 @@ export function useIndexLogic(setUserInfo: (data: IUserInfo) => void) {
   return {
     form,
     clickHandler,
-    visible,
+    visible: signInModalVisible,
     toggleVisible,
     signInLoading,
     signUpLoading,

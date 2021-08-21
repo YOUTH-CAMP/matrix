@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, FC, useEffect, useRef } from "react";
 import { Tabs } from "antd";
 import { useHistory } from "react-router";
@@ -5,6 +6,15 @@ import { Responsive, WidthProvider, Layout } from "react-grid-layout";
 import "./style.css";
 import { request } from "./../../utils/request";
 import style from "./ArticleCard.module.less";
+=======
+import React, { useState, FC, useEffect, useRef, useContext } from "react";
+import { Card, Col, Row, Tabs } from "antd";
+import { useHistory } from "react-router";
+import { Responsive, WidthProvider, Layout } from "react-grid-layout";
+import "./style.css";
+import pageInfo from "./all.json";
+import { GlobalContext } from "@/store";
+>>>>>>> dev
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const { TabPane } = Tabs;
@@ -27,6 +37,11 @@ type ArticleData = {
 };
 
 const Home: FC<Props> = ({ name = "Home" }: Props) => {
+<<<<<<< HEAD
+=======
+  const {userInfo} = useContext(GlobalContext)
+  console.log("page", pageInfo);
+>>>>>>> dev
   const [EUlayout, setEUlayout] = useState<listItem>([]);
   const [articlesList, setArticlesList] = React.useState<articleList[]>([]);
   const [loaded, setLoaded] = React.useState<boolean>(false);

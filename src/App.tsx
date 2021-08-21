@@ -2,11 +2,12 @@ import React from "react";
 import { ConfigProvider } from "antd";
 import zhCN from "antd/lib/locale/zh_CN";
 import Layout from "./components/Layout/index";
-import Home from "./pages/Home";
 import styles from "./App.module.less";
-import { SignIn } from "./pages/components";
-import { GlobalContext, useGlobalContext } from "./store";
+import { GlobalContext } from "./store";
 import NavBar from "./components/Navbar";
+import { useGlobalContext } from "./hooks/useGlobalContext";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { routes } from "./router";
 
 function App(): JSX.Element {
   const globalContextValue = useGlobalContext();
@@ -15,10 +16,17 @@ function App(): JSX.Element {
     <ConfigProvider locale={zhCN}>
       <GlobalContext.Provider value={globalContextValue}>
         <div className={styles.container}>
-          <NavBar />
-          <Layout>
-            <Home />
-          </Layout>
+          <Router>
+            <Layout>
+              {routes.map((route) => {
+                return (
+                  <Route key={route.path} path={route.path} exact={route.exact}>
+                    {route.component}
+                  </Route>
+                );
+              })}
+            </Layout>
+          </Router>
         </div>
       </GlobalContext.Provider>
     </ConfigProvider>
