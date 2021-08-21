@@ -1,7 +1,7 @@
 import React, { useState, FC, useEffect, useRef } from "react";
 import { Alert, message, Tabs } from "antd";
 import { useHistory } from "react-router";
-import DragLayout from "./dragLayout";
+import DragLayout from "./components/dragLayout";
 import { request } from "./../../utils/request";
 
 const { TabPane } = Tabs;

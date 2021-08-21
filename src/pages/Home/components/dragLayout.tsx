@@ -4,12 +4,12 @@ import ReactGridLayout, {
   WidthProvider,
   Layout,
 } from "react-grid-layout";
-import "./style.css";
+import "../style.css";
 import style from "./ArticleCard.module.less";
-import { request } from "./../../utils/request";
+import { request } from "../../../utils/request";
 import { message } from "antd";
-import { GlobalContext } from "../../store";
-import ArticleCard from './components/ArticleCard'
+import { GlobalContext } from "../../../store";
+import ArticleCard from './ArticleCard'
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 type listItem = {
@@ -92,6 +92,7 @@ const DragLayout = ({ classifyId }: Props) => {
         useCSSTransforms={true} //性能优化
         // isResizable={false} //是否可以调整大小
         measureBeforeMount={false}
+        resizeHandles={['sw','nw', 'se', 'ne']}
         cols={{ lg: 12, md: 12, sm: 6, xs: 4, xxs: 2 }}
         // onLayoutChange={onLayoutChange}
         onDragStop={onDragStop}
