@@ -4,7 +4,7 @@ export type Argument = Value | Mapping;
 export const classNames = (...arg: Argument[]): string => {
   const classes: string[] = [];
   arg.forEach((item) => {
-    if (item == null) {
+    if (item == null || typeof item === "boolean") {
       return;
     }
     if (typeof item === "string" || typeof item === "number") {
