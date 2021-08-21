@@ -1,11 +1,10 @@
 import React from "react";
-import zhCN from "antd/lib/locale/zh_CN";
-import { PageHeader, Tabs, Button, Statistic, Descriptions, Input } from "antd";
+import { PageHeader, Button, Input } from "antd";
 import style from "./index.module.less";
 import { AppstoreOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
 const { Search } = Input;
-import { SignIn } from "../../pages/components/SignIn/index";
+import { SignIn } from "@/pages/components/SignIn/index";
 import { useHistory } from "react-router-dom";
 import { SearchOutlined } from "@ant-design/icons";
 
@@ -74,6 +73,6 @@ function App(): JSX.Element {
       </div>
     </div>
   );
-};
+}
 
 export default App;

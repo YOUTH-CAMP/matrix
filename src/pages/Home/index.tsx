@@ -1,13 +1,12 @@
-import React, { useState, FC, useEffect, useRef } from "react";
-import { Alert, message, Tabs } from "antd";
-import { useHistory } from "react-router";
+import React, { useState, FC } from "react";
+import {  message, Tabs } from "antd";
 import ReactGridLayout, {
   Responsive,
   WidthProvider,
   Layout,
 } from "react-grid-layout";
 import "./style.css";
-import { request } from "./../../utils/request";
+import { request } from "@/utils/request";
 import ArticleCard from './components/ArticleCard'
 
 
