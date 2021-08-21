@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { IUserInfo } from "../apis/account/interface";
-import { IGlobalContext } from "../interface";
-import { GlobalEventName } from "../constants/GlobalEventName";
-import { LocalstorageKey } from "../constants";
+import { IUserInfo } from "@/apis/account/interface";
+import { IGlobalContext } from "@/interface";
+import { GlobalEventName } from "@/constants/GlobalEventName";
+import { LocalstorageKey } from "@/constants";
 
 export function useGlobalContext(): IGlobalContext {
   const [userInfo, setUserInfo] = useState<null | IUserInfo>(null);
+  const [signInModalVisible, setSignInModalVisible] = useState(false);
   const [globalEvent, setGlobalEvent] = useState<{
     [k: string]: Array<() => void>;
   }>({});
@@ -27,10 +28,21 @@ export function useGlobalContext(): IGlobalContext {
     });
   };
 
+  const showSignInModal = () => {
+    setSignInModalVisible(true);
+  }
+
+  const hideSignInModal = () => {
+    setSignInModalVisible(false);
+  }
+
   return {
     userInfo,
     setUserInfo,
     logout,
     on,
+    showSignInModal,
+    hideSignInModal,
+    signInModalVisible,
   };
 }
