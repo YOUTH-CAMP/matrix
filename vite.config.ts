@@ -11,6 +11,11 @@ const themeVariables = lessToJS(
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [reactRefresh()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    },
+  },
   css: {
     preprocessorOptions: {
       less: {

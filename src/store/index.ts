@@ -3,6 +3,7 @@ import { IGlobalContext } from "@/interface";
 
 export const GlobalContext = createContext<IGlobalContext>({
   userInfo: null,
+  signInModalVisible: false,
   setUserInfo() {
     // default
   },
@@ -12,4 +13,10 @@ export const GlobalContext = createContext<IGlobalContext>({
   on() {
     // default
   },
+  showSignInModal() {
+    // default
+  },
+  hideSignInModal() {
+    // default
+  }
 });

@@ -1,9 +1,10 @@
-import React, { useState, FC, useEffect, useRef } from "react";
+import React, { useState, FC, useEffect, useRef, useContext } from "react";
 import { Card, Col, Row, Tabs } from "antd";
 import { useHistory } from "react-router";
 import { Responsive, WidthProvider, Layout } from "react-grid-layout";
 import "./style.css";
 import pageInfo from "./all.json";
+import { GlobalContext } from "@/store";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const { TabPane } = Tabs;
@@ -34,6 +35,7 @@ type listItem = {
 }[];
 
 const Home: FC<Props> = ({ name = "Home" }: Props) => {
+  const {userInfo} = useContext(GlobalContext)
   console.log("page", pageInfo);
   const [EUlayout, setEUlayout] = useState<listItem>([]);
   useEffect(() => {

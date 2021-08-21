@@ -16,9 +16,8 @@ function App(): JSX.Element {
     <ConfigProvider locale={zhCN}>
       <GlobalContext.Provider value={globalContextValue}>
         <div className={styles.container}>
-          <NavBar />
-          <Layout>
-            <Router>
+          <Router>
+            <Layout>
               {routes.map((route) => {
                 return (
                   <Route key={route.path} path={route.path} exact={route.exact}>
@@ -26,8 +25,8 @@ function App(): JSX.Element {
                   </Route>
                 );
               })}
-            </Router>
-          </Layout>
+            </Layout>
+          </Router>
         </div>
       </GlobalContext.Provider>
     </ConfigProvider>
