@@ -1,6 +1,5 @@
 import React from "react";
 import { Button, Input, Layout } from "antd";
-import Nav from "../Nav";
 import NavBar from "../Navbar";
 import { relative } from "path/posix";
 

@@ -1,20 +1,15 @@
-<<<<<<< HEAD
 import React, { useState, FC, useEffect, useRef } from "react";
-import { Tabs } from "antd";
+import { Alert, message, Tabs } from "antd";
 import { useHistory } from "react-router";
-import { Responsive, WidthProvider, Layout } from "react-grid-layout";
+import ReactGridLayout, {
+  Responsive,
+  WidthProvider,
+  Layout,
+} from "react-grid-layout";
 import "./style.css";
 import { request } from "./../../utils/request";
-import style from "./ArticleCard.module.less";
-=======
-import React, { useState, FC, useEffect, useRef, useContext } from "react";
-import { Card, Col, Row, Tabs } from "antd";
-import { useHistory } from "react-router";
-import { Responsive, WidthProvider, Layout } from "react-grid-layout";
-import "./style.css";
-import pageInfo from "./all.json";
-import { GlobalContext } from "@/store";
->>>>>>> dev
+import ArticleCard from './components/ArticleCard'
+
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const { TabPane } = Tabs;
@@ -29,30 +24,38 @@ type listItem = {
   w: number;
   h: number;
   i: string;
-}[];
+};
 
 type ArticleData = {
   success: boolean;
   data: Array<articleList>;
 };
 
+type LayoutData = {
+  success: boolean;
+  data: Array<listItem>;
+};
+
 const Home: FC<Props> = ({ name = "Home" }: Props) => {
-<<<<<<< HEAD
-=======
-  const {userInfo} = useContext(GlobalContext)
-  console.log("page", pageInfo);
->>>>>>> dev
-  const [EUlayout, setEUlayout] = useState<listItem>([]);
+
+  const [EUlayout, setEUlayout] = useState<listItem[]>([]);
+
   const [articlesList, setArticlesList] = React.useState<articleList[]>([]);
   const [loaded, setLoaded] = React.useState<boolean>(false);
+  const userId = "611e169c488e2ad6005c98fd";
+  const classifyId = "全部";
   React.useEffect(() => {
     //获取用户首页卡片接口数据
     const fetchData = async () => {
       const res = (await request("articleList")) as ArticleData;
+      const LayoutRes = (await request("getLayout", {
+        userId,
+        classifyId,
+      })) as LayoutData;
       setLoaded(res.success);
       setArticlesList(res.data);
-      const newLayout: listItem = [];
-      res.data.map((item) => {
+      const newLayout: listItem[] = [];
+      LayoutRes.data.map((item) => {
         const newItem = {
           x: item.x,
           y: item.y,
@@ -60,10 +63,11 @@ const Home: FC<Props> = ({ name = "Home" }: Props) => {
           minW: 2,
           minH: 3,
           h: item.h,
-          i: item.key,
+          i: item.i,
         };
         newLayout.push(newItem);
       });
+      console.log(newLayout);
       setEUlayout(newLayout);
     };
     !loaded && fetchData();
@@ -73,18 +77,53 @@ const Home: FC<Props> = ({ name = "Home" }: Props) => {
     console.log(key);
   }
   //存储拖拽移动的位置到缓存
-  const onLayoutChange = (
-    currentLayout: ReactGridLayout.Layout[],
-    allLayouts: ReactGridLayout.Layouts
-  ) => {
-    console.log("currentLayout", currentLayout);
-    console.log("allLayouts", allLayouts);
-  };
+  // const onLayoutChange = async (
+  //   currentLayout: ReactGridLayout.Layout[],
+  //   allLayouts: ReactGridLayout.Layouts
+  // ) => {
+  //   // const upDateLayout:listItem[] = []
+  //   // currentLayout.map(item=>{
+  //   //   upDateLayout.push({
+  //   //     'x': item.x,
+  //   //     'y': item.y,
+  //   //     'w': item.w,
+  //   //     'h': item.h,
+  //   //     'i': item.i,
+  //   //   })
+  //   // })
+  //   // const saveLayout = (await request("saveLayout",{
+  //   //   coordinateInfo: JSON.stringify(upDateLayout),
+  //   //   userId,
+  //   //   classifyId,
+  //   // }))
+  //   // message.info(saveLayout.message);
+  //   // console.log(saveLayout);
+  //   console.log("currentLayout", currentLayout);
+  //   console.log("allLayouts", allLayouts);
+  // };
   //拖拽完成后触发函数
   const onDrop: (layout: Layout[], item: Layout | null, e: Event) => void = (
     elemParams
   ) => {
     alert(`Element parameters: ${JSON.stringify(elemParams)}`);
+  };
+  const onDragStop = async (e: Layout[]) => {
+    console.log(e);
+    const saveLayout = await request("saveLayout", {
+      coordinateInfo: JSON.stringify(e),
+      userId,
+      classifyId,
+    });
+    message.info(saveLayout.message);
+  };
+  const onResizeStop = async (e: Layout[]) => {
+    console.log(e);
+    const saveLayout = await request("saveLayout", {
+      coordinateInfo: JSON.stringify(e),
+      userId,
+      classifyId,
+    });
+    message.info(saveLayout.message);
   };
   return (
     <div className="justify-center" style={{ height: "100%", width: "100%" }}>
@@ -105,22 +144,19 @@ const Home: FC<Props> = ({ name = "Home" }: Props) => {
                 // isResizable={false} //是否可以调整大小
                 measureBeforeMount={false}
                 cols={{ lg: 12, md: 12, sm: 6, xs: 4, xxs: 2 }}
-                onLayoutChange={onLayoutChange}
+                // onLayoutChange={onLayoutChange}
+                onDrop={onDrop}
+                onDragStop={onDragStop}
+                onResizeStop={onResizeStop}
                 margin={[20, 20]}
               >
                 {articlesList.map((item) => {
                   return (
-                    <div key={item.key} className={style.articlebox}>
-                      <div className={style.articletitle}>{item.title}</div>
-                      <div className={style.articlelist}>
-                        <ul>
-                          {item.content.map((cItem, cIndex) => {
-                            return (
-                              <li key={item.key + cIndex}>{cItem.itemTitle}</li>
-                            );
-                          })}
-                        </ul>
-                      </div>
+                    <div
+                      key={item.key}
+                      className="flex justify-content w-full h-full flex-col"
+                    >
+                      <ArticleCard article={item} />
                     </div>
                   );
                 })}
