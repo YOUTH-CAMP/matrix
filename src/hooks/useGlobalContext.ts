@@ -6,7 +6,9 @@ import { LocalstorageKey } from "@/constants";
 import { message } from "antd";
 
 export function useGlobalContext(): IGlobalContext {
-  const [userInfo, setUserInfo] = useState<null | IUserInfo>(null);
+  const [userInfo, setUserInfo] = useState<null | IUserInfo>(
+    JSON.parse(localStorage.getItem(LocalstorageKey.userInfo) ?? "null")
+  );
   const [signInModalVisible, setSignInModalVisible] = useState(false);
   const [globalEvent, setGlobalEvent] = useState<{
     [k: string]: Array<() => void>;
