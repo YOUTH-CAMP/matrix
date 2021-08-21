@@ -13,7 +13,7 @@ const onSearch = (value: string) => console.log(value);
 
 const menuList = [
   { name: "首页", key: "1", path: "/" },
-  { name: "订阅", key: "2", path: "" },
+  // { name: "订阅", key: "2", path: "" },
   { name: "快讯", key: "3", path: "./news" },
 ];
 
@@ -43,13 +43,13 @@ function App(): JSX.Element {
             );
           })}
         </div>
-        <div className={style.buttonstyle2}>
+        {/*<div className={style.buttonstyle2}>
           <Search
             placeholder="搜索您想要的模块"
             onSearch={onSearch}
             style={{ width: "300px" }}
           />
-        </div>
+        </div>*/}
         <Button className={style.searchbutton}>
           <SearchOutlined />
         </Button>
