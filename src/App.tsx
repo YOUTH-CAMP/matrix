@@ -1,5 +1,5 @@
-import React from "react";
-import { ConfigProvider } from "antd";
+import React, { Suspense } from "react";
+import { ConfigProvider, Spin } from "antd";
 import zhCN from "antd/lib/locale/zh_CN";
 import Layout from "./components/Layout/index";
 import styles from "./App.module.less";

@@ -1,0 +1,83 @@
+.articlebox {
+    box-sizing: border-box;
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    background-color: #ececec;
+    margin: 30px 10px 30px 10px;
+    position: relative;
+    box-shadow: 10px 10px 5px #888888;
+}
+
+.articletitle {
+    margin: 5px;
+    height: 50px;
+    font-size: 30px;
+    font-weight: bold;
+    position: fixed;
+    border-radius: 5px;
+    a {
+        text-decoration:none;
+    }
+}
+.articlelist {
+    width: 95%;
+    overflow-y:auto;
+    overflow-x: hidden;
+    font-size: 16px;
+    position: absolute;
+    top: 70px;
+    bottom: 20px;
+    ul {
+        margin: 0;
+        padding: 0;
+        li {
+            list-style: none;
+            height: auto;
+            line-height: 30px;
+            color: black;
+            position: relative;
+            padding: 5px;
+            .policiesline {
+                width: 100%;
+                height: 1px;
+                background-color: rgba(226,226,226,1);
+                position: absolute;
+                bottom: 5px;
+                display: none;
+            }
+            a {
+                color: black;
+            }
+            a:hover {
+                .policiesline {
+                    background-color: rgb(167, 167, 167);
+                    display: block;
+                }
+            }
+            a:visited {
+                color: gray;
+            }
+        }
+        li:hover {
+            background-color: #d2d0d0;
+        }
+    }
+}
+.out-line {
+    width: 100%;                                                                                                                                                                                                                                                                                                                                 
+    height: 1px;
+    background-color: rgb(109, 109, 109);
+    position: absolute;
+    
+}
+.articlefooter {
+    height: 20px;
+    margin: 10px 5px 10px 5px ;
+    padding: 5px 0 5px 0;
+    font-size: 13px;
+    color: rgb(114, 114, 114);
+    position: fixed;
+    bottom: 0;
+}
