@@ -9,6 +9,8 @@ import { useHistory } from "react-router-dom";
 import { SearchOutlined } from "@ant-design/icons";
 import { GlobalContext } from "@/store";
 import UserMenu from "../UserMenu";
+import { AppstoreOutlined } from "@ant-design/icons";
+import { positions } from "@material-ui/system";
 
 const { SubMenu } = Menu;
 const onSearch = (value: string) => console.log(value);
@@ -46,6 +48,23 @@ function App(): JSX.Element {
             );
           })}
         </div>
+        <div className={style.menu}>
+          <div style={{marginBottom:'50px',marginRight:'50px'}}>
+            <Menu mode="inline" style={{ paddingLeft: "0px", position:'absolute',width:'100px'}}>
+            <SubMenu key="sub1" icon={<AppstoreOutlined />}>
+            <Menu.Item key="1" onClick={() => jumpPage(menuList[0].path)}>{menuList[0].name}</Menu.Item>
+            <Menu.Item key="3" onClick={() => jumpPage(menuList[1].path)}>{menuList[1].name}</Menu.Item>
+            </SubMenu>
+              {/* <SubMenu key="sub1" icon={<AppstoreOutlined />}>
+                {menuList.map((menu) => {
+                  <Menu.Item key={menu.key} onClick={() => jumpPage(menu.path)}>
+                    {menu.name}
+                  </Menu.Item>;
+                })}
+              </SubMenu> */}
+            </Menu>
+          </div>
+        </div>
         {/*<div className={style.buttonstyle2}>
           <Search
             placeholder="搜索您想要的模块"
@@ -53,9 +72,9 @@ function App(): JSX.Element {
             style={{ width: "300px" }}
           />
         </div>*/}
-        <Button className={style.searchbutton}>
+        {/* <Button className={style.searchbutton}>
           <SearchOutlined />
-        </Button>
+        </Button> */}
       </div>
 
       <div className={style.logincenter}>
