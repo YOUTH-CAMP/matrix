@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Button, Modal, Form, Input, PageHeader } from "antd";
 import styles from "./index.module.less";
 import { useIndexLogic } from "./useIndexLogic";
-import { GlobalContext } from "../../../store";
+import { GlobalContext } from "@/store";
 
 export function SignIn(): JSX.Element {
   const { setUserInfo } = useContext(GlobalContext);
@@ -33,7 +33,9 @@ export function SignIn(): JSX.Element {
         >
           <div className={styles.body}>
             <h1 className={styles.title}>Matrix</h1>
-            <p style={{marginBottom: 12, color: '#999'}}>全网资讯一站式浏览</p>
+            <p style={{ marginBottom: 12, color: "#999" }}>
+              全网资讯一站式浏览
+            </p>
 
             <Form style={colStyle} form={form}>
               <Form.Item
@@ -50,7 +52,7 @@ export function SignIn(): JSX.Element {
               </Form.Item>
             </Form>
             <Button
-              style={{...colStyle, marginTop: 16}}
+              style={{ ...colStyle, marginTop: 16 }}
               type={"primary"}
               onClick={() => clickHandler("signIn")}
               loading={signInLoading}
@@ -60,7 +62,7 @@ export function SignIn(): JSX.Element {
             </Button>
             <div style={{ color: "#999" }}>-or-</div>
             <Button
-              style={{...colStyle, marginBottom: 16}}
+              style={{ ...colStyle, marginBottom: 16 }}
               onClick={() => clickHandler("signUp")}
               loading={signUpLoading}
               disabled={signInLoading}
