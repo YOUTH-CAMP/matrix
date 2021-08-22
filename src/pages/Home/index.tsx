@@ -60,7 +60,6 @@ const Home: FC<Props> = ({ name = "Home" }: Props) => {
           width: "364px",
           padding: "0 32px",
           height: `${rollListHeight}px`,
-          overflow: "hidden",
         }}
       >
         <RollList />
