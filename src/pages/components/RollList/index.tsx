@@ -7,24 +7,30 @@ import { useRequest } from "@/hooks/useRequest";
 export function RollList() {
   const [containerHeight, setContainerHeight] = useState(0);
   const [contentHeight, setContentHeight] = useState(0);
-  const { data } = useRequest("getNews");
+  const { data } = useRequest("getRollList");
 
   const containerRef = useCallback((node: any) => {
     if (!node) return;
-    setContainerHeight(node.clientHeight);
+    const resizeObserver = new ResizeObserver((entries) => {
+      setContainerHeight(entries[0].target.clientHeight);
+    });
+    resizeObserver.observe(node);
   }, []);
   const contentRef = useCallback((node: any) => {
     if (!node) return;
-    setContentHeight(node.clientHeight);
+    const resizeObserver = new ResizeObserver((entries) => {
+      setContentHeight(entries[0].target.clientHeight);
+    });
+    resizeObserver.observe(node);
   }, []);
 
   const [offsetY, setOffsetY] = useState(0);
 
   const scroll = (y: number = 0) => {
     if (localStorage.getItem(LocalstorageKey.isStopScroll) === "true") return;
-    setOffsetY(y + 0.1);
+    setOffsetY(y);
     requestAnimationFrame(() => {
-      scroll(y > contentHeight - containerHeight ? 0 : y);
+      scroll((y > contentHeight - containerHeight ? -0.1 : y) + 0.1);
     });
   };
 
@@ -38,10 +44,9 @@ export function RollList() {
   }
 
   useEffect(() => {
-    // console.log(contentHeight, containerHeight);
-    // if (contentHeight > 0 && containerHeight > 0) {
-    //   onMouseLeave();
-    // }
+    if (contentHeight > 0 && containerHeight > 0) {
+      onMouseLeave();
+    }
   }, [contentHeight, containerHeight]);
 
   return (
@@ -49,8 +54,8 @@ export function RollList() {
       <div
         ref={contentRef}
         className={styles.cardList}
-        // onMouseEnter={onMouseEnter}
-        // onMouseLeave={onMouseLeave}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
         style={{
           transform: `translate3d(0, -${offsetY}px, 0)`,
         }}
@@ -62,7 +67,7 @@ export function RollList() {
                 renderData={{
                   title: x.title,
                   content: x.content,
-                  imageSrc: x.imageSrc,
+                  imageSrc: x.imageSrc?.includes("data:") ? null : x.imageSrc,
                   link: x.link,
                 }}
               />
