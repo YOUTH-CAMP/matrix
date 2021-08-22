@@ -6,6 +6,8 @@ type articleList = {
   title: string;
   key: string;
   url: string;
+  logoImg: string;
+  classify: string;
   content: {
     itemTitle: string;
     itemContent: string;

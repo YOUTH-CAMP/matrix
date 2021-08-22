@@ -1,6 +1,7 @@
 import * as React from "react";
-import { Row, Col } from "antd";
+import { Row, Col, BackTop } from "antd";
 import style from "./ArticleCard.module.less";
+import { UpCircleOutlined  } from '@ant-design/icons';
 
 type ArticleCardProps = {
   article: articleList;
@@ -8,14 +9,17 @@ type ArticleCardProps = {
 
 const ArticleCard: React.FC<ArticleCardProps> = (props: ArticleCardProps) => {
   const { article } = props;
+  const listEl = React.useRef(null);
   return (
     <div className={style.articlebox}>
       <div className={style.articletitle}>
+      <img style={{display:"inline-block",height:"40px",width:article.title=="微博"?"40px":"60px"}} src={
+        article.logoImg}></img>
         <a href={article.url} target="_blank" rel="noreferrer">
           {article.title}
         </a>
       </div>
-      <div className={style.articlelist}>
+      <div ref={listEl} className={style.articlelist}>
         <ul>
           {article.content.map((item, index: number) => (
             <li key={article.title + index}>
@@ -38,8 +42,12 @@ const ArticleCard: React.FC<ArticleCardProps> = (props: ArticleCardProps) => {
           ))}
         </ul>
       </div>
+      <BackTop className={style.backtop} target={()=>listEl.current} visibilityHeight={400}>
+        < UpCircleOutlined style={{color: "rgba(50, 50, 50, .5)",fontSize: "18px"}}/>
+      </BackTop>
       <div className={style.articlefooter}></div>
     </div>
   );
-};
+}
+
 export default ArticleCard;
