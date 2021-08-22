@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Card } from "antd";
 import style from "./index.module.less";
 
@@ -16,29 +16,39 @@ interface ICardProps {
 function App(props: ICardProps): JSX.Element {
   const { renderData } = props;
 
+  const description = useMemo(() => {
+    const descriptionMaxLength = 70;
+    const str = renderData?.content || "";
+    return str.length > descriptionMaxLength
+      ? str.slice(0, descriptionMaxLength) + "..."
+      : str;
+  }, [renderData?.content]);
+
   return (
     <Card
+      bordered={false}
       className={style.card}
       onClick={() => {
         if (renderData?.link) {
-          window.open();
+          window.open(renderData.link);
         }
       }}
     >
       <div style={{ display: "flex" }}>
-        <div style={{ width: "95px", marginLeft: "5px" }}>
+        <div style={{ flex: "1 1" }}>
           <img
+            style={{ maxWidth: "100%" }}
             src={
-              renderData?.imageSrc ??
+              renderData?.imageSrc ||
               "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
             }
             alt=""
-          ></img>
+          />
         </div>
         <Meta
           title={renderData?.title || ""}
-          description={renderData?.content || ""}
-          style={{ width: "200px" }}
+          description={description}
+          style={{ width: "180px", paddingLeft: 8 }}
         />
       </div>
     </Card>
