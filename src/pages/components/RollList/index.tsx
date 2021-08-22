@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import styles from "./index.module.less";
+import Cards from '../../../components/Cards';
 
 export function RollList() {
   const [containerHeight, setContainerHeight] = useState(0);
