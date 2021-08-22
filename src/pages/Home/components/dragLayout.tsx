@@ -30,7 +30,7 @@ interface Props {
   classifyId?: string;
 }
 const DragLayout = ({ classifyId }: Props) => {
-  const { userInfo, showSignInModal } = useContext(GlobalContext);
+  const { userInfo, showSignInModal,  } = useContext(GlobalContext);
   const [EUlayout, setEUlayout] = useState<listItem[]>([]);
   const [articlesList, setArticlesList] = useState<articleList[]>([]);
   const [loaded, setLoaded] = React.useState<boolean>(false);
@@ -53,12 +53,13 @@ const DragLayout = ({ classifyId }: Props) => {
       if(locationLayout) newLayout = JSON.parse(locationLayout);
       //未登录且未有本地存储数据的时候
       setEUlayout(newLayout)
-      localStorage.setItem(`MaxtrixLayout${classifyId}`, JSON.stringify(newLayout))
     } else { //登录
+      if(locationLayout) checkLogin(JSON.parse(locationLayout),'synchronism'); //本地数据上传至服务器
       setEUlayout(newLayout)
     }
     setEUlayout(newLayout);
-    setLoaded(true)
+    setLoaded(true);
+    localStorage.setItem(`MaxtrixLayout${classifyId}`, JSON.stringify(newLayout))
   };
 
   const getLayoutData = (data: LayoutData) =>{
@@ -80,15 +81,14 @@ const DragLayout = ({ classifyId }: Props) => {
   useEffect(() => {
     fetchData();
   }, [userInfo]);
-  const checkLogin = async (e: Layout[]) => {
-    if (!userInfo) return (message.error("您还未进行登录，只能将您的页面信息存储与本地无法同步云端"),showSignInModal(),
-    localStorage.setItem(`MaxtrixLayout${classifyId}`,JSON.stringify(e)));
+  const checkLogin = async (e: Layout[], type?:string) => {
+    if (!userInfo) return localStorage.setItem(`MaxtrixLayout${classifyId}`,JSON.stringify(e));
     const saveLayout = await request("saveLayout", {
       coordinateInfo: JSON.stringify(e),
       userId,
       classifyId,
     });
-    message.info(saveLayout.message);
+    if(type==='synchronism') message.info(saveLayout.message);
   };
   const onDragStop = async (e: Layout[]) => {
     checkLogin(e);
@@ -117,7 +117,6 @@ const DragLayout = ({ classifyId }: Props) => {
         measureBeforeMount={false}
         // resizeHandles={['sw','nw', 'se', 'ne']}
         cols={{ lg: 12, md: 12, sm: 6, xs: 4, xxs: 2 }}
-        // onLayoutChange={onLayoutChange}
         onDragStop={onDragStop}
         onResizeStop={onResizeStop}
         margin={[20, 20]}
@@ -126,6 +125,7 @@ const DragLayout = ({ classifyId }: Props) => {
           return (
             <div
               key={item.key}
+              onClick={(e)=>{e.preventDefault()}}
               className="flex justify-content w-full h-full flex-col"
             >
               <ArticleCard article={item} />
