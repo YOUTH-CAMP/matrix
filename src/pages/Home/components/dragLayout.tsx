@@ -34,6 +34,7 @@ const DragLayout = ({ classifyId }: Props) => {
   const [EUlayout, setEUlayout] = useState<listItem[]>([]);
   const [articlesList, setArticlesList] = useState<articleList[]>([]);
   const [loaded, setLoaded] = React.useState<boolean>(false);
+  const locationLayout = localStorage.getItem(`MaxtrixLayout${classifyId}`)
   const userId = userInfo?.id;
   const fetchData = async () => {
     const res = (await request("articleList")) as ArticleData;
@@ -47,8 +48,22 @@ const DragLayout = ({ classifyId }: Props) => {
       const NewArticlesList= res.data.filter(function(item){ return item.classify === classifyId})
       setArticlesList(NewArticlesList); 
     }
+    let newLayout = getLayoutData(LayoutRes)
+    if(!userId) { //未登录
+      if(locationLayout) newLayout = JSON.parse(locationLayout);
+      //未登录且未有本地存储数据的时候
+      setEUlayout(newLayout)
+      localStorage.setItem(`MaxtrixLayout${classifyId}`, JSON.stringify(newLayout))
+    } else { //登录
+      setEUlayout(newLayout)
+    }
+    setEUlayout(newLayout);
+    setLoaded(true)
+  };
+
+  const getLayoutData = (data: LayoutData) =>{
     const newLayout: listItem[] = [];
-    LayoutRes.data.map((item) => {
+    data.data.map((item) => {
       const newItem = {
         x: item.x,
         y: item.y,
@@ -60,14 +75,14 @@ const DragLayout = ({ classifyId }: Props) => {
       };
       newLayout.push(newItem);
     });
-    setEUlayout(newLayout);
-    setLoaded(true)
-  };
+    return newLayout
+  }
   useEffect(() => {
     fetchData();
   }, [userInfo]);
   const checkLogin = async (e: Layout[]) => {
-    if (!userInfo) return message.error("您还未进行登录，无法保存页面布局信息"),showSignInModal();
+    if (!userInfo) return (message.error("您还未进行登录，只能将您的页面信息存储与本地无法同步云端"),showSignInModal(),
+    localStorage.setItem(`MaxtrixLayout${classifyId}`,JSON.stringify(e)));
     const saveLayout = await request("saveLayout", {
       coordinateInfo: JSON.stringify(e),
       userId,
