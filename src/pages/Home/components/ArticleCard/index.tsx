@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Row, Col, BackTop } from "antd";
 import style from "./ArticleCard.module.less";
-import { UpCircleOutlined } from "@ant-design/icons";
+import { UpCircleOutlined, ClockCircleOutlined } from "@ant-design/icons";
 
 
 type ArticleCardProps = {
@@ -27,16 +27,17 @@ const ArticleCard: React.FC<ArticleCardProps> = (props: ArticleCardProps) => {
   return (
     <div className={style.articlebox}>
       <div className={style.articletitle}>
+        
+        <a href={article.url} target="_blank" rel="noreferrer">
         <img
           style={{
             display: "inline-block",
             height: "40px",
-            width: article.title == "微博" ? "40px" : "60px",
+            // width: article.title == "微博" ? "40px" : "60px",
           }}
           src={article.logoImg}
         ></img>
-        <a href={article.url} target="_blank" rel="noreferrer">
-          {article.title}
+          {article.title=="微博"&&" 微博"}
         </a>
       </div>
       <div ref={listEl} className={style.articlelist}>
@@ -73,7 +74,8 @@ const ArticleCard: React.FC<ArticleCardProps> = (props: ArticleCardProps) => {
           style={{ color: "rgba(50, 50, 50, .5)", fontSize: "18px" }}
         />
       </BackTop>
-      <div className={style.articlefooter}>
+      <div className={style.articlefooter} >
+        <ClockCircleOutlined style={{marginRight: "2px", verticalAlign: "baseline", color: "rgba(50, 50, 50, .5)", fontSize: "13px" }}/>
         <span>{calcTime(article.updateTime)+"前更新"}</span>
       </div>
     </div>
