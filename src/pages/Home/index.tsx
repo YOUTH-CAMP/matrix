@@ -53,16 +53,15 @@ const Home: FC<Props> = ({ name = "Home" }: Props) => {
           </Tabs>
         )}
       </div>
-      <div
-        style={{
-          width: "364px",
-          padding: "0 32px",
-          height: `${rollListHeight}px`,
-          overflow: "hidden",
-        }}
-      >
-        <RollList />
-      </div>
+      {/*<div*/}
+      {/*  style={{*/}
+      {/*    width: "364px",*/}
+      {/*    padding: "0 32px",*/}
+      {/*    height: `${rollListHeight}px`,*/}
+      {/*  }}*/}
+      {/*>*/}
+      {/*  <RollList />*/}
+      {/*</div>*/}
     </div>
   );
 };
