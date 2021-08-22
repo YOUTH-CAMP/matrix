@@ -1,6 +1,7 @@
 import React, { ReactElement } from "react";
 import Home from "./pages/Home";
 import News from "./pages/News";
+import Search from "./pages/Search";
 
 interface IRouter {
   path: string;
@@ -18,5 +19,10 @@ export const routes: IRouter[] = [
     path: "/news",
     component: <News />,
     exact: true,
+  },
+  {
+    path: "/search",
+    component: <Search />,
+    exact: false,
   },
 ];

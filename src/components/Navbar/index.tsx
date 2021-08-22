@@ -1,18 +1,17 @@
-import React, { useContext } from "react";
+import React, { ChangeEventHandler, useContext, useState } from "react";
 import { PageHeader, Button, Input, message } from "antd";
 import style from "./index.module.less";
 import { Menu } from "antd";
 
 const { Search } = Input;
 import { SignIn } from "@/pages/components";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { SearchOutlined } from "@ant-design/icons";
 import { GlobalContext } from "@/store";
 import UserMenu from "../UserMenu";
 import { AppstoreOutlined } from "@ant-design/icons";
 
 const { SubMenu } = Menu;
-const onSearch = (value: string) => console.log(value);
 
 const menuList = [
   { name: "首页", key: "1", path: "/" },
@@ -23,6 +22,7 @@ const menuList = [
 function App(): JSX.Element {
   const history = useHistory();
   const { userInfo, logout } = useContext(GlobalContext);
+  const [inputValue, setinputValue] = useState(decodeURIComponent(window.location.search.split('=')[1])??null)
   const jumpPage = (path: string) => {
     if (!path) {
       message.info("该功能正在开发中...");
@@ -30,6 +30,10 @@ function App(): JSX.Element {
     }
     history.push({ pathname: path });
   };
+  const onSearch = (value: string) => window.location.href=`search?title=${encodeURIComponent(value)}`
+  const onChange: React.ChangeEventHandler<HTMLInputElement> | undefined = (e) => {
+    setinputValue(e.target.value)
+  }
   return (
     <div className={style.flexframe}>
       <div className={style.center}>
@@ -64,13 +68,15 @@ function App(): JSX.Element {
             </Menu>
           </div>
         </div>
-        {/*<div className={style.buttonstyle2}>
+        <div style={{paddingLeft:10}}>
           <Search
-            placeholder="搜索您想要的模块"
+            placeholder="搜索您想要的标题关键字"
             onSearch={onSearch}
+            value={inputValue}
+            onChange={onChange}
             style={{ width: "300px" }}
           />
-        </div>*/}
+        </div>
         {/* <Button className={style.searchbutton}>
           <SearchOutlined />
         </Button> */}
