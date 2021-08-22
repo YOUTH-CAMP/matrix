@@ -14,9 +14,7 @@ const ArticleCard: React.FC<ArticleCardProps> = (props: ArticleCardProps) => {
     <div className={style.articlebox}>
       <div className={style.articletitle}>
       <img style={{display:"inline-block",height:"40px",width:article.title=="微博"?"40px":"60px"}} src={
-        article.title=="微博"?
-        "https://tse2-mm.cn.bing.net/th/id/OIP-C.zZ57V80mCw7QVbv3SAmkSgHaF_?pid=ImgDet&rs=1"
-      :"https://i8.chinanews.com/2013/home/images/logo.jpg"}></img>
+        article.logoImg}></img>
         <a href={article.url} target="_blank" rel="noreferrer">
           {article.title}
         </a>
