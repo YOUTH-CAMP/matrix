@@ -3,6 +3,7 @@ import { Tabs } from "antd";
 import DragLayout from "./components/dragLayout";
 import { request } from "@/utils/request";
 import { RollList } from "@/pages/components";
+import styles from "./index.module.less";
 
 const { TabPane } = Tabs;
 
@@ -25,7 +26,10 @@ const Home: FC<Props> = ({ name = "Home" }: Props) => {
 
   useEffect(() => {
     if (!contentEl.current) return;
-    setRollListHeight(contentEl.current!.clientHeight);
+    const resizeObserver = new ResizeObserver((entries) => {
+      setRollListHeight(entries[0].target.clientHeight);
+    });
+    resizeObserver.observe(contentEl.current);
   }, [contentEl.current]);
 
   React.useEffect(() => {
@@ -42,7 +46,7 @@ const Home: FC<Props> = ({ name = "Home" }: Props) => {
     <div style={{ display: "flex", height: "100%", width: "100%" }}>
       <div className="justify-center" style={{ flex: "1 1" }} ref={contentEl}>
         {loaded && (
-          <Tabs defaultActiveKey="1" centered>
+          <Tabs defaultActiveKey="1" centered className={styles.tabs}>
             {TabData.map((item, index) => {
               return (
                 <TabPane tab={item.name} key={item.id}>
@@ -53,15 +57,15 @@ const Home: FC<Props> = ({ name = "Home" }: Props) => {
           </Tabs>
         )}
       </div>
-      {/*<div*/}
-      {/*  style={{*/}
-      {/*    width: "364px",*/}
-      {/*    padding: "0 32px",*/}
-      {/*    height: `${rollListHeight}px`,*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*  <RollList />*/}
-      {/*</div>*/}
+      <div
+        style={{
+          width: "364px",
+          padding: "0 32px",
+          height: `${rollListHeight}px`,
+        }}
+      >
+        <RollList />
+      </div>
     </div>
   );
 };

@@ -8,6 +8,7 @@ type articleList = {
   url: string;
   logoImg: string;
   classify: string;
+  updateTime: string;
   content: {
     itemTitle: string;
     itemContent: string;
