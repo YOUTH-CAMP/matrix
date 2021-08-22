@@ -11,12 +11,10 @@ export function RollList() {
 
   const containerRef = useCallback((node: any) => {
     if (!node) return;
-    console.log("操A", node.clientHeight);
     setContainerHeight(node.clientHeight);
   }, []);
   const contentRef = useCallback((node: any) => {
     if (!node) return;
-    console.log("操B", node.clientHeight);
     setContentHeight(node.clientHeight);
   }, []);
 
@@ -42,7 +40,6 @@ export function RollList() {
   useEffect(() => {
     // console.log(contentHeight, containerHeight);
     // if (contentHeight > 0 && containerHeight > 0) {
-    //   console.log("fuck", contentHeight, containerHeight);
     //   onMouseLeave();
     // }
   }, [contentHeight, containerHeight]);
