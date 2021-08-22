@@ -5,12 +5,11 @@ import ReactGridLayout, {
   Layout,
 } from "react-grid-layout";
 import "../style.css";
-import style from "./ArticleCard.module.less";
 import { request } from "../../../utils/request";
-import { message } from "antd";
+import { message, Spin } from "antd";
 import { GlobalContext } from "../../../store";
 import ArticleCard from './ArticleCard'
-
+import load from "./load.module.less";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 type listItem = {
   x: number;
@@ -34,15 +33,20 @@ const DragLayout = ({ classifyId }: Props) => {
   const { userInfo, showSignInModal } = useContext(GlobalContext);
   const [EUlayout, setEUlayout] = useState<listItem[]>([]);
   const [articlesList, setArticlesList] = useState<articleList[]>([]);
+  const [loaded, setLoaded] = React.useState<boolean>(false);
   const userId = userInfo?.id;
-  console.log(userInfo, userId);
   const fetchData = async () => {
     const res = (await request("articleList")) as ArticleData;
     const LayoutRes = (await request("getLayout", {
       userId,
       classifyId,
     })) as LayoutData;
-    setArticlesList(res.data);
+    if(classifyId === '全部')  { 
+      setArticlesList(res.data); 
+    } else {
+      const NewArticlesList= res.data.filter(function(item){ return item.classify === classifyId})
+      setArticlesList(NewArticlesList); 
+    }
     const newLayout: listItem[] = [];
     LayoutRes.data.map((item) => {
       const newItem = {
@@ -57,9 +61,9 @@ const DragLayout = ({ classifyId }: Props) => {
       newLayout.push(newItem);
     });
     setEUlayout(newLayout);
+    setLoaded(true)
   };
   useEffect(() => {
-    console.log(233);
     fetchData();
   }, [userInfo]);
   const checkLogin = async (e: Layout[]) => {
@@ -79,6 +83,11 @@ const DragLayout = ({ classifyId }: Props) => {
   };
   return (
     <div className="site-card-wrapper" style={{ padding: "0px 50px" }}>
+      {
+        loaded? null: (<div className='width-full flex items-center justify-center'>
+          <span className={load.loader}></span>
+        </div>)
+      }
       <ResponsiveReactGridLayout
         // className="layout"
         layouts={{

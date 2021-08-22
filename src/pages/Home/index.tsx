@@ -19,9 +19,7 @@ type ArticleClassify = {
 };
 const Home: FC<Props> = ({ name = "Home" }: Props) => {
   const [loaded, setLoaded] = React.useState<boolean>(false);
-  const userId = "611e169c488e2ad6005c98fd";
   const [TabData, setTabData] = useState<ArticleClassifyItem[]>([]);
-  const classifyId = "全部";
   const contentEl = useRef<any>(null);
   const [rollListHeight, setRollListHeight] = useState(500);
 
@@ -47,7 +45,7 @@ const Home: FC<Props> = ({ name = "Home" }: Props) => {
           <Tabs defaultActiveKey="1" centered>
             {TabData.map((item, index) => {
               return (
-                <TabPane tab={item.name} key={index}>
+                <TabPane tab={item.name} key={item.id}>
                   <DragLayout classifyId={item.name} />
                 </TabPane>
               );
