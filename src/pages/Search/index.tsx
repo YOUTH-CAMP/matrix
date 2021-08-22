@@ -20,7 +20,6 @@ const News: React.FC = () => {
     setloading(res.success)
   }
   useEffect(() => {
-    
     getSearch();
   }, []);
   const trackScrolling = () => {
@@ -49,11 +48,11 @@ const News: React.FC = () => {
   return (
     <>
       <MessageList messageList={newsList} ref={newsListRef} />
-      {loading ? (
+      {!loading ? (
         <div className={styles.newsLoading}>
           <Spin />
         </div>
-      ) : null}
+      ) : <div className='width-full flex justify-center items-center padding-tb text-gray-400 my-2	'>暂无数据</div>}
     </>
   );
 };

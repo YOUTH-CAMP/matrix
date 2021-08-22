@@ -22,7 +22,8 @@ const menuList = [
 function App(): JSX.Element {
   const history = useHistory();
   const { userInfo, logout } = useContext(GlobalContext);
-  const [inputValue, setinputValue] = useState(decodeURIComponent(window.location.search.split('=')[1])??null)
+  const searchData = window.location.search.split('=')[1];
+  const [inputValue, setinputValue] = useState(searchData? decodeURIComponent(searchData):'')
   const jumpPage = (path: string) => {
     if (!path) {
       message.info("该功能正在开发中...");
