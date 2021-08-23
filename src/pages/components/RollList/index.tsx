@@ -3,6 +3,7 @@ import styles from "./index.module.less";
 import Cards from "../../../components/Cards";
 import { LocalstorageKey } from "@/constants";
 import { useRequest } from "@/hooks/useRequest";
+import zIndex from "@material-ui/core/styles/zIndex";
 
 export function RollList() {
   const [containerHeight, setContainerHeight] = useState(0);
@@ -30,7 +31,7 @@ export function RollList() {
     if (localStorage.getItem(LocalstorageKey.isStopScroll) === "true") return;
     setOffsetY(y);
     requestAnimationFrame(() => {
-      scroll((y > contentHeight - containerHeight ? -0.1 : y) + 0.1);
+      scroll((y > contentHeight - containerHeight ? -0.1 : y) + 0.3);
     });
   };
 
@@ -51,6 +52,10 @@ export function RollList() {
 
   return (
     <div className={styles.container} ref={containerRef}>
+      <div className ={styles.header}>
+        <h1>快讯为您推荐中...</h1>
+
+      </div>
       <div
         ref={contentRef}
         className={styles.cardList}
