@@ -28,12 +28,18 @@
     font-weight: bold;
     position: fixed;
     border-radius: 5px;
+   
     img {
+        display: inline-block;
+        height: 40px;
         image-rendering: -moz-crisp-edges; /* Firefox */     
         image-rendering: -o-crisp-edges; /* Opera */      
         image-rendering: -webkit-optimize-contrast; /*Webkit (non-standard naming) */ 
         image-rendering: crisp-edges; 
         -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
+    }
+    @media screen and (max-width: 600px){
+        img {height: 25px;}
     }
     a {
         margin-left: 5px;

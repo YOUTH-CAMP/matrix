@@ -18,7 +18,7 @@ const calcTime=function(t:string){
   const leave2 = leave1 % (3600*1000);
   const minutes = Math.floor(leave2/(60*1000));
   console.log(days?days+"天":"") + (hours?hours+"小时":"") + (minutes?minutes+"分钟":"")
-  return (days?days+"天":"") + (hours?hours+"小时":"") + (minutes?minutes+"分钟":"");
+  return (days?days+"天":"") + (hours?hours+"小时":"") + (!days&&!hours&&minutes?minutes+"分钟":"");
 }
 
 const ArticleCard: React.FC<ArticleCardProps> = (props: ArticleCardProps) => {
@@ -29,14 +29,7 @@ const ArticleCard: React.FC<ArticleCardProps> = (props: ArticleCardProps) => {
       <div className={style.articletitle}>
         
         <a href={article.url} target="_blank" rel="noreferrer">
-        <img
-          style={{
-            display: "inline-block",
-            height: "40px",
-            // width: article.title == "微博" ? "40px" : "60px",
-          }}
-          src={article.logoImg}
-        ></img>
+        <img src={article.logoImg}></img>
           {article.title=="微博"&&" 微博"}
         </a>
       </div>

@@ -35,7 +35,9 @@ NewsList.displayName = "NewsList";
 const NewsItem: React.FC<INews> = (props: INews) => {
   const { title, content, time, link, imageSrc, source } = props;
   const date = new Date(time);
-  const timeDisplay = `${date.getUTCMonth()}/${date.getUTCDate()} ${date.getUTCHours()}:${
+  const timeDisplay = `${
+    date.getUTCMonth() + 1
+  }/${date.getUTCDate()} ${date.getUTCHours()}:${
     (date.getMinutes() < 10 ? "0" : "") + date.getMinutes()
   }`;
 
