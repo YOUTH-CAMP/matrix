@@ -46,14 +46,28 @@ const Home: FC<Props> = ({ name = "Home" }: Props) => {
   return (
     <div style={{ display: "flex", height: "100%", width: "100%", flexDirection: isMobile()? 'column':'row'}} >
        <div
-        className='justify-center'
+        className='justify-center items-center'
         style={{
           width:  "100%",
           padding: "0 32px",
           height: "200px",
+          flexDirection: 'column',
           display: isMobile()?'inline-flex':'none',
         }}
       >
+        {/* <div className ={styles.header}> */}
+        <div className='flex justify-center items-center' 
+          style={{
+            backgroundColor: '#f0f0f0', 
+            textAlign:'center',
+            height:40,
+            color: '#141414',
+            width:'100%',
+            fontSize:18,
+            fontWeight: 'bold'
+          }}>
+        快讯为您推荐中...
+        </div>
         <RollList />
       </div>
       <div className="justify-center" style={{ flex: "1 1" }} ref={contentEl}>
@@ -70,13 +84,27 @@ const Home: FC<Props> = ({ name = "Home" }: Props) => {
         )}
       </div>
       <div
+        className='justify-center items-center'
         style={{
           width: "364px",
           padding: "0 32px",
           height: `${rollListHeight}px`,
-          display: !isMobile()?'inline-block':'none',
+          display: !isMobile()?'inline-flex':'none',
+          flexDirection: 'column'
         }}
       >
+        <div className='flex justify-center items-center' 
+          style={{
+            backgroundColor: '#f0f0f0', 
+            textAlign:'center',
+            color: '#141414',
+            height:40,
+            width:'100%',
+            fontSize:18,
+            fontWeight: 'bold'
+          }}>
+        快讯为您推荐中...
+        </div>
         <RollList />
       </div>
     </div>
