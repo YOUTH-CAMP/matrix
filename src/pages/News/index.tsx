@@ -6,7 +6,7 @@ import MessageList from "../components/NewsList";
 import { INews } from "@/apis/news/interface";
 
 const News: React.FC = () => {
-  const [page, setPage] = useState<number>(0);
+  const [page, setPage] = useState<number>(1);
   const [newsList, setNewsList] = useState<INews[]>([]);
   const newsListRef = useRef<HTMLDivElement>(null);
   const { loading, run } = useRequest("getNews", {
@@ -14,7 +14,7 @@ const News: React.FC = () => {
   });
 
   useEffect(() => {
-    run({ page }).then((res) => {
+    run({ page: 0 }).then((res) => {
       setNewsList(res.data as INews[]);
     });
   }, []);
@@ -29,7 +29,6 @@ const News: React.FC = () => {
         console.log("header bottom reached");
         setPage((page) => page + 1);
         run({ page }).then((res) => {
-          console.log(page, res);
           setNewsList((newsList) => newsList.concat(res.data as INews[]));
         });
       }
