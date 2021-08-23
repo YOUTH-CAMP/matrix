@@ -10,6 +10,7 @@ import { message, Spin } from "antd";
 import { GlobalContext } from "../../../store";
 import ArticleCard from './ArticleCard'
 import load from "./load.module.less";
+import isMobile from '../../../utils/isMobile'
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 type listItem = {
   x: number;
@@ -82,6 +83,7 @@ const DragLayout = ({ classifyId }: Props) => {
     fetchData();
   }, [userInfo]);
   const checkLogin = async (e: Layout[], type?:string) => {
+    if(isMobile()) return
     if (!userInfo) return localStorage.setItem(`MaxtrixLayout${classifyId}`,JSON.stringify(e));
     const saveLayout = await request("saveLayout", {
       coordinateInfo: JSON.stringify(e),
@@ -97,7 +99,7 @@ const DragLayout = ({ classifyId }: Props) => {
     checkLogin(e);
   };
   return (
-    <div className="site-card-wrapper" style={{ padding: "0px 50px" }}>
+    <div className="site-card-wrapper" style={{ padding:isMobile()?"0px 5px":"0px 50px" }}>
       {
         loaded? null: (<div className='width-full flex items-center justify-center'>
           <span className={load.loader}></span>
@@ -109,11 +111,10 @@ const DragLayout = ({ classifyId }: Props) => {
           lg: EUlayout,
         }}
         rowHeight={30}
-        // isDraggable={false} //是否允许拖拽
-        // isDroppable={false} //是否允许拖拽
+        isDraggable={!isMobile()} //是否允许拖拽
         compactType="vertical"
         useCSSTransforms={true} //性能优化
-        // isResizable={false} //是否可以调整大小
+        isResizable={!isMobile()} //是否可以调整大小
         measureBeforeMount={false}
         // resizeHandles={['sw','nw', 'se', 'ne']}
         cols={{ lg: 12, md: 12, sm: 6, xs: 4, xxs: 2 }}
@@ -125,7 +126,6 @@ const DragLayout = ({ classifyId }: Props) => {
           return (
             <div
               key={item.key}
-              onClick={(e)=>{e.preventDefault()}}
               className="flex justify-content w-full h-full flex-col"
             >
               <ArticleCard article={item} />

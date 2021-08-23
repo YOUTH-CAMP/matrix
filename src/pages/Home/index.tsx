@@ -4,6 +4,7 @@ import DragLayout from "./components/dragLayout";
 import { request } from "@/utils/request";
 import { RollList } from "@/pages/components";
 import styles from "./index.module.less";
+import isMobile from "@/utils/isMobile";
 
 const { TabPane } = Tabs;
 
@@ -43,7 +44,18 @@ const Home: FC<Props> = ({ name = "Home" }: Props) => {
   }, []);
 
   return (
-    <div style={{ display: "flex", height: "100%", width: "100%" }}>
+    <div style={{ display: "flex", height: "100%", width: "100%", flexDirection: isMobile()? 'column':'row'}} >
+       <div
+        className='justify-center'
+        style={{
+          width:  "100%",
+          padding: "0 32px",
+          height: "200px",
+          display: isMobile()?'inline-flex':'none',
+        }}
+      >
+        <RollList />
+      </div>
       <div className="justify-center" style={{ flex: "1 1" }} ref={contentEl}>
         {loaded && (
           <Tabs defaultActiveKey="1" centered className={styles.tabs}>
@@ -62,6 +74,7 @@ const Home: FC<Props> = ({ name = "Home" }: Props) => {
           width: "364px",
           padding: "0 32px",
           height: `${rollListHeight}px`,
+          display: !isMobile()?'inline-block':'none',
         }}
       >
         <RollList />

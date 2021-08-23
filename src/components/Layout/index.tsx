@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Input, Layout } from "antd";
 import NavBar from "../Navbar";
 import { relative } from "path/posix";
+import isMobile from "@/utils/isMobile";
 
 const { Header, Content } = Layout;
 const { Search } = Input;
@@ -17,7 +18,7 @@ const App = ({ children }: Props) => {
       <div>
         <NavBar />
       </div>
-      <div style={{ height: "75px" }}></div>
+      <div style={{  height: isMobile()?124:"75px" }}></div>
       <div>
         <Content>{children}</Content>
       </div>

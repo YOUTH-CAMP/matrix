@@ -10,6 +10,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { GlobalContext } from "@/store";
 import UserMenu from "../UserMenu";
 import { AppstoreOutlined } from "@ant-design/icons";
+import isMobile from "@/utils/isMobile";
 
 const { SubMenu } = Menu;
 
@@ -36,7 +37,8 @@ function App(): JSX.Element {
     setinputValue(e.target.value)
   }
   return (
-    <div className={style.flexframe}>
+    <div className={style.flexframe} style={{flexDirection: isMobile()? 'column':'row', height: isMobile()?124:72,zIndex:1 }}>
+      <div className='flex justify-around w-full' style={{ position:'fixed',top:0,}}>
       <div className={style.center}>
         <PageHeader title="Matrix" style={{ paddingRight: "0px" }} />
         <div className={style.buttonstyle}>
@@ -69,7 +71,7 @@ function App(): JSX.Element {
             </Menu>
           </div>
         </div>
-        <div style={{paddingLeft:10}}>
+        <div style={{paddingLeft:10, display: isMobile()? 'none':'block'}}>
           <Search
             placeholder="搜索您想要的标题关键字"
             onSearch={onSearch}
@@ -99,6 +101,16 @@ function App(): JSX.Element {
         ) : (
           <SignIn />
         )}
+      </div>
+      </div>
+      <div className='justify-center w-full' style={{ position:'fixed',top:75, padding:10, zIndex:0, display: !isMobile()? 'none':'flex', }}>
+          <Search
+            placeholder="搜索您想要的标题关键字"
+            onSearch={onSearch}
+            value={inputValue}
+            onChange={onChange}
+            style={{ width: "300px" }}
+          />
       </div>
     </div>
   );

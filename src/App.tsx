@@ -11,7 +11,7 @@ import { routes } from "./router";
 
 function App(): JSX.Element {
   const globalContextValue = useGlobalContext();
-
+  
   return (
     <ConfigProvider locale={zhCN}>
       <GlobalContext.Provider value={globalContextValue}>
