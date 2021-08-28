@@ -1,0 +1,86 @@
+.flexframe{
+    display: flex;
+    justify-content:space-around;
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+    background-color:white;
+    box-shadow:0 2px 8px #f0f1f2;
+    margin-bottom: 50px;
+    height: 72px;
+}
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+  
+.buttonstyle {
+    padding: '16px 24px';
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+.button{
+    border:'none'; 
+    background:'none'
+}
+
+.HeaderSearch{
+    text-align: 'right',
+}
+
+.menu{
+    // padding: '16px 24px';
+    justify-content: center;
+    align-items: center; 
+    display: none;
+    
+}
+.logincenter{
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    
+}
+.ps{
+    padding-right: 24px;
+    padding-left:24px;
+}
+.buttonstyle2{
+    padding: '16px 24px';
+    display: flex;
+    justify-content: center;
+    align-items: center;  
+}
+.searchbutton{
+    padding: '16px 24px';
+    display: none;
+    justify-content: center;
+    align-items: center; 
+    border: transparent;
+    
+}
+
+@media only screen and (max-width: 600px) {
+    .menu{
+        display: flex;   
+    }
+    .center {
+        padding: 0px;
+        margin:0px;
+    }
+    .buttonstyle{
+        display:none;
+        
+    }
+  }
+  
+  @media only screen and (max-width: 718px) {
+    .buttonstyle2 {
+        display:none;
+      }
+    .searchbutton{
+        display: flex;
+    }
+  }

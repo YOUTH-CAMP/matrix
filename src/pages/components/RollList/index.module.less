@@ -1,0 +1,29 @@
+.container {
+  height: 100%;
+  overflow: hidden;
+}
+
+.cardList {
+
+}
+
+.cardContainer {
+  height: 200px;
+  cursor: default;
+
+  &:not(:last-of-type) {
+    border-bottom: 1px solid #efefef;
+  }
+}
+
+.header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1;
+  height: 50px;
+  width: 300px;
+  background-color: white;
+  box-shadow: 0 2px 8px #f0f1f2,
+}

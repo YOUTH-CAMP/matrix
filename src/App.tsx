@@ -1,30 +1,34 @@
-import React, { useState } from "react";
-import { ConfigProvider, Button, Row, Col } from "antd";
+import React, { Suspense } from "react";
+import { ConfigProvider, Spin } from "antd";
 import zhCN from "antd/lib/locale/zh_CN";
-import "./App.less";
 import Layout from "./components/Layout/index";
-import Home from "./pages/Home";
 import styles from "./App.module.less";
-import { request } from "./utils/request";
-import { useRequest } from "./hooks/useRequest";
+import { GlobalContext } from "./store";
+import NavBar from "./components/Navbar";
+import { useGlobalContext } from "./hooks/useGlobalContext";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { routes } from "./router";
 
 function App(): JSX.Element {
-  const { data, loading } = useRequest(async () =>
-    request("articleClassifications")
-  );
+  const globalContextValue = useGlobalContext();
 
-  async function test() {
-    const res = await request("articleClassifications");
-    console.log(res);
-  }
-  console.log(data, loading);
   return (
     <ConfigProvider locale={zhCN}>
-      <div className="App">
-        <Layout>
-          <Home />
-        </Layout>
-      </div>
+      <GlobalContext.Provider value={globalContextValue}>
+        <div className={styles.container}>
+          <Router>
+            <Layout>
+              {routes.map((route) => {
+                return (
+                  <Route key={route.path} path={route.path} exact={route.exact}>
+                    {route.component}
+                  </Route>
+                );
+              })}
+            </Layout>
+          </Router>
+        </div>
+      </GlobalContext.Provider>
     </ConfigProvider>
   );
 }

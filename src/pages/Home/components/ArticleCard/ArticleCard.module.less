@@ -1,0 +1,122 @@
+.articlebox {
+    box-sizing: border-box;
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    background-color: #fff;
+    position: relative;
+    box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08);
+    .backtop {
+        width: 20px;
+        height: 20px;
+        position: fixed;
+        top: 20px;
+        right: 5px;
+      }
+}
+.articlebox:hover {
+    // box-shadow: 5px 5px 5px #b7b7b7;
+    box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.15);
+}
+
+.articletitle {
+    width: 100%;
+    margin: 5px;
+    height: 50px;
+    font-size: 30px;
+    font-weight: bold;
+    position: fixed;
+    border-radius: 5px;
+    img {
+        image-rendering: -moz-crisp-edges; /* Firefox */     
+        image-rendering: -o-crisp-edges; /* Opera */      
+        image-rendering: -webkit-optimize-contrast; /*Webkit (non-standard naming) */ 
+        image-rendering: crisp-edges; 
+        -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
+    }
+    a {
+        margin-left: 5px;
+        vertical-align:middle;
+        display: inline-block;
+        line-height: 50px;
+        text-decoration:none;
+    }
+}
+.articlelist {
+    width: 100%;
+    overflow-y:auto;
+    overflow-x: hidden;
+    font-size: 16px;
+    position: absolute;
+    top: 70px;
+    bottom: 30px;
+    right: 1px;
+    ul {
+        margin: 0;
+        padding: 0;
+        li {
+            list-style: none;
+            height: auto;
+            line-height: 30px;
+            color: black;
+            position: relative;
+            padding: 5px 5px 5px 10px;
+            .policiesline {
+                width: 100%;
+                height: 1px;
+                background-color: rgba(226,226,226,1);
+                position: absolute;
+                bottom: 5px;
+                display: none;
+            }
+            a {
+                color: black;
+            }
+            a:hover {
+                .policiesline {
+                    background-color: rgb(167, 167, 167);
+                    display: block;
+                }
+            }
+            a:visited {
+                color: gray;
+            }
+        }
+        li:hover {
+            background-color: #e5e6e6;
+        }
+    }
+    /* 火狐 */
+    scrollbar-color: #c2c2c2 #f5f6f8;
+    scrollbar-width: thin;
+      
+    /* chrome */
+    &::-webkit-scrollbar {
+        /* 滚动条纵向滚动的尺寸 */
+        width : 4px;
+          /* 滚动条横向滚动的尺寸 */
+        height: 6px;
+    }
+      
+    /* 滚动条颜色 */
+    &::-webkit-scrollbar-thumb {
+        border-radius   : 5px;
+        background-color: rgba(50, 50, 50, .3);
+    }
+      
+    /* 滚动槽颜色 */
+    &::-webkit-scrollbar-track {
+        background-color: rgba(50, 50, 50, .1);
+    }
+}
+
+.articlefooter {
+    height: 20px;
+    margin: 10px 5px 10px 5px ;
+    padding: 5px 0 5px 0;
+    font-size: 12px;
+    color: rgb(114, 114, 114);
+    position: fixed;
+    bottom: 0;
+}
